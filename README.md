@@ -38,9 +38,9 @@ engine errors (with the real engine in place it is rarely reached).
 - **Beliefs** — "Draft the grounding" distills a hypothesis into the
   dataset's formal Concept pack (definition · primary series · forbidden
   proxies · thresholds; seeds in `data/concepts/`, from the BetaThon
-  ConsciousTwin records). "Ratify & remember" writes the next version under
-  `data/store/beliefs/` — a version is never overwritten, and an edited
-  threshold really changes the verdicts.
+  ConsciousTwin records). "Ratify & remember" commits the next version to
+  EverOS memory — a version is never overwritten, and an edited threshold
+  really changes the verdicts.
 - **Analysis** — verdicts per country under the recalled belief (latest
   non-null primary observation), proxy traps caught (e.g. Germany: 101%
   enrolled vs 64% complete), and the token receipt: grounded pack vs
@@ -50,6 +50,28 @@ engine errors (with the real engine in place it is rarely reached).
   chart is a live query over it. Row #1 is the dry run's cold episode.
 - **Memory** — belief versions (meaning moved) and runs/refreshes (verdicts
   moved) merged into one timeline, kept visually apart.
+
+## Memory substrate — EverOS
+
+Beliefs live in the EverOS storage root (`EVEROS_ROOT`, default `~/.everos`),
+speaking the storage-root layout natively (`idatasight/backend/everos.py`):
+
+```
+<root>/idatasight/<dataset_id>/
+    agents/<user>/skills/skill_<concept>/
+        SKILL.md                the canon of the latest ratified declaration
+        references/v<N>.json    every version verbatim, append-only
+    users/<user>/episodes/
+        episode-<date>.md       every run booked as an entry-bracketed append
+```
+
+No server is required — the file canon suffices; an EverOS server started
+over the same root indexes every unit. The markdown tree is the asset. Memory
+is per-analyst (`IDATASIGHT_USER`, default `sudhi`) — two analysts can hold
+different beliefs over the same data. Token-ledger rows stay in the
+application (`data/store/ledger.json`); only the episode record is booked to
+memory. On screen the vocabulary stays belief / remembered / recalled — the
+substrate's name never appears in the UI.
 
 ## Test run
 
@@ -92,8 +114,9 @@ idatasight/
 │  ├─ messages.py     actor-message vocabulary (phase-2 tao.Events)
 │  ├─ hooks.py        dispatch() — THE seam
 │  ├─ engine.py       message router → the handlers below
+│  ├─ everos.py       EverOS memory substrate (storage-root canon)
 │  ├─ warehouse.py    dataset registry + CSV/Snowflake readers
-│  ├─ concepts.py     draft · ratify · versioned belief store · history
+│  ├─ concepts.py     draft · ratify · remember/recall via EverOS · history
 │  ├─ scoring.py      verdicts · traps · token receipt (BetaThon port)
 │  ├─ ledger_store.py append-only run log → chart/tiles
 │  ├─ ingest.py       live World Bank / Eurostat refresh
@@ -103,6 +126,6 @@ idatasight/
 data/
 ├─ warehouse/         real panels (CSV mirror of Snowflake BETATHON)
 ├─ concepts/          formal Concept seeds (BetaThon records)
-└─ store/             app-owned: belief versions + run ledger
+└─ store/             app-owned token ledger (beliefs live in EVEROS_ROOT)
 scripts/test_run.py   end-to-end engine test → reports/TEST_RUN.md
 ```

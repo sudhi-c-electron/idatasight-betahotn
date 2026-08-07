@@ -8,9 +8,9 @@ __pycache__/
 .states/
 *.db
 
-# App runtime store — belief versions + run ledger accumulate locally;
+# App runtime store — the token ledger and the test suite's scratch EverOS
+# root. Beliefs live outside the repo in EVEROS_ROOT (~/.everos by default);
 # fresh clones re-seed from data/concepts/ and the dry-run proof.
-# (EverOS integration will replace this store entirely.)
 data/store/
 
 # Local debris

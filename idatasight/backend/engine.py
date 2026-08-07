@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from ..config import USER
 from ..models import ColumnInfo, Dataset
 from . import concepts, ingest, ledger_store, scoring, warehouse
 from . import messages as m
@@ -39,7 +40,7 @@ def _fetch_columns(ds_id: str) -> list[ColumnInfo]:
 
 
 def _run_analysis(ds_id: str, kind: str = "run") -> Any:
-    belief = concepts.current(ds_id)
+    belief = concepts.current(ds_id)  # recalled from memory, not re-declared
     result = scoring.analyze(ds_id, belief)
     row = ledger_store.append(
         {
@@ -56,6 +57,16 @@ def _run_analysis(ds_id: str, kind: str = "run") -> Any:
         }
     )
     result.receipt.ledger_row = row
+    # Ledger rows stay in the application; the run itself is booked to memory.
+    concepts.memory().remember_episode(
+        USER,
+        ds_id,
+        row,
+        note=(
+            f"{kind} under {belief['concept']} v{belief['version']} · "
+            f"{result.receipt.tokens} tokens · ledger row #{row}"
+        ),
+    )
     return result
 
 

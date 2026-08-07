@@ -12,6 +12,10 @@ reports/TEST_RUN.md with the actual outputs:
                    trade, checked against the BetaThon dry-run proof.
   4. Ledger      — the appended rows and computed tiles.
   5. Memory      — the two-history timeline for the wdi belief.
+  6. Substrate   — the EverOS storage root: append-only pack plane, SKILL.md
+                   canon, recall round-trip, runs booked as episodes (in a
+                   scratch root under data/store — the analyst's real memory
+                   at EVEROS_ROOT/~/.everos is never touched by tests).
 
 Run:  uv run python scripts/test_run.py [--no-network]
 """
@@ -19,17 +23,26 @@ Run:  uv run python scripts/test_run.py [--no-network]
 from __future__ import annotations
 
 import json
+import os
+import shutil
 import sys
 from datetime import datetime
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 
-from idatasight.backend import engine  # noqa: E402
+# Deterministic sandbox: the test owns data/store (app ledger) and a scratch
+# EverOS root inside it — the analyst's real memory (~/.everos) is never
+# touched by tests.
+shutil.rmtree(ROOT / "data" / "store", ignore_errors=True)
+os.environ["EVEROS_ROOT"] = str(ROOT / "data" / "store" / "test_everos")
+
+from idatasight.backend import concepts, engine, ledger_store  # noqa: E402
 from idatasight.backend import messages as m  # noqa: E402
 from idatasight.backend.warehouse import WAREHOUSE  # noqa: E402
+from idatasight.config import USER  # noqa: E402
 
-ROOT = Path(__file__).resolve().parents[1]
 REPORT = ROOT / "reports" / "TEST_RUN.md"
 
 NETWORK = "--no-network" not in sys.argv
@@ -252,6 +265,49 @@ def main() -> int:
         "timeline separates belief changes from data runs",
         belief_events >= 2 and data_events >= 2,
         f"{belief_events} belief · {data_events} data events",
+    )
+
+    # ── 7 · Memory substrate — the EverOS storage root ────────────────────
+    lines += ["", "## 7 · Memory substrate — remembered and recalled", ""]
+    mem = concepts.memory()
+    skill = (
+        mem.root / "idatasight" / "wdi" / "agents" / USER / "skills"
+        / "skill_secondary_completion"
+    )
+    refs = sorted(p.name for p in (skill / "references").glob("v*.json"))
+    lines.append(
+        f"Storage root (scratch): `{mem.root}` — pack plane holds {refs}, "
+        f"episodes plane holds {len(mem.episodes(USER, 'wdi'))} booked runs."
+    )
+    lines.append("")
+    check(
+        "belief versions remembered append-only in the pack plane",
+        refs == ["v1.json", "v2.json"],
+        ", ".join(refs),
+    )
+    skill_md = (skill / "SKILL.md").read_text(encoding="utf-8") if (skill / "SKILL.md").exists() else ""
+    check(
+        "SKILL.md is the canon of the latest ratified declaration",
+        "(v2)" in skill_md and "agent_skill" in skill_md,
+    )
+    recalled = mem.recall(USER, "wdi")
+    check(
+        "recall returns the remembered v2 with its parsed thresholds",
+        recalled is not None
+        and recalled["version"] == 2
+        and recalled["thresholds"]["high"] == 95.0,
+        recalled and f"v{recalled['version']} · high ≥ {recalled['thresholds']['high']:g}",
+    )
+    wdi_rows = [
+        r["row"]
+        for r in ledger_store.runs()
+        if r["dataset"] == "wdi" and r["kind"] != "cold"
+    ]
+    booked = list(mem.episodes(USER, "wdi"))
+    check(
+        "every wdi run is booked as an episode in memory",
+        booked == wdi_rows,
+        f"episodes {booked} vs ledger rows {wdi_rows}",
     )
 
     # ── verdict ────────────────────────────────────────────────────────────

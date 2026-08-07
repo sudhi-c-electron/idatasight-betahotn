@@ -1,8 +1,10 @@
 """Concept declarations — draft, ratify, versioned memory.
 
 Seeds come from the BetaThon formal Concept records (data/concepts/*.json).
-Ratified versions are append-only files under data/store/beliefs/<dataset>/ —
-a version is never overwritten; reopening a belief drafts the next one.
+Ratified versions live in EverOS memory (backend/everos.py — the storage-root
+pack plane, per-analyst, append-only): a version is never overwritten;
+reopening a belief drafts the next one. The UI vocabulary stays belief /
+remembered / recalled — the substrate's name never appears on screen.
 """
 
 from __future__ import annotations
@@ -10,8 +12,8 @@ from __future__ import annotations
 import json
 import re
 from datetime import datetime
-from pathlib import Path
 
+from ..config import USER
 from ..models import (
     Analyst,
     BeliefHistory,
@@ -22,22 +24,25 @@ from ..models import (
     TimelineEvent,
 )
 from . import warehouse
+from .everos import EverOSMemory
 from .warehouse import APP_ROOT, REGISTRY
 
-STORE = APP_ROOT / "data" / "store" / "beliefs"
 CONCEPT_SEEDS = APP_ROOT / "data" / "concepts"
 
+_memory: EverOSMemory | None = None
 
-def _ds_dir(ds_id: str) -> Path:
-    d = STORE / ds_id
-    d.mkdir(parents=True, exist_ok=True)
-    return d
+
+def memory() -> EverOSMemory:
+    """The EverOS memory, bound on first use (honors EVEROS_ROOT)."""
+    global _memory
+    if _memory is None:
+        _memory = EverOSMemory()
+    return _memory
 
 
 def _versions(ds_id: str) -> list[dict]:
-    """All ratified versions for a dataset's belief, oldest first."""
-    files = sorted(_ds_dir(ds_id).glob("v*.json"), key=lambda p: int(p.stem[1:]))
-    return [json.loads(p.read_text()) for p in files]
+    """All remembered versions of this dataset's belief, oldest first."""
+    return memory().history(USER, ds_id)
 
 
 def _seed_statement(ds_id: str) -> str:
@@ -69,7 +74,7 @@ def _forbidden_text(cfg: dict) -> str:
 
 
 def ensure_seed(ds_id: str) -> None:
-    """Materialize v1 from the formal BetaThon Concept on first touch."""
+    """Remember v1 from the formal BetaThon Concept on first touch."""
     if _versions(ds_id):
         return
     cfg = warehouse.concept_cfg(ds_id)
@@ -88,7 +93,7 @@ def ensure_seed(ds_id: str) -> None:
         "ratified_on": "2026-08-07",
         "origin": "seed — BetaThon dry run",
     }
-    (_ds_dir(ds_id) / "v1.json").write_text(json.dumps(v1, indent=2))
+    memory().remember_pack(USER, ds_id, v1)
 
 
 def draft_grounding(hypothesis: str, ds_id: str) -> GroundingDraft:
@@ -118,7 +123,11 @@ def _parse_thresholds(text: str, cfg: dict) -> dict:
 
 
 def ratify(ds_id: str, statement: str, fields: dict) -> RatifyResult:
-    """Commit a human-confirmed pack as the next version. Never overwrites."""
+    """Commit a human-confirmed pack as the next remembered version.
+
+    The declaration is preserved as declared — a canon write to the pack
+    plane; a version, once remembered, is never overwritten.
+    """
     ensure_seed(ds_id)
     cfg = warehouse.concept_cfg(ds_id)
     versions = _versions(ds_id)
@@ -134,7 +143,7 @@ def ratify(ds_id: str, statement: str, fields: dict) -> RatifyResult:
         "ratified_on": today,
         "origin": "ratified in iDataSight",
     }
-    (_ds_dir(ds_id) / f"v{n}.json").write_text(json.dumps(record, indent=2))
+    memory().remember_pack(USER, ds_id, record)
     return RatifyResult(
         version=f"v{n}", remembered_on=datetime.now().strftime("%b %-d, %Y")
     )

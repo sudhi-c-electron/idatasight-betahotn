@@ -1,6 +1,6 @@
 # iDataSight — engine test run on real data
 
-**Generated:** 2026-08-07T15:29:10  
+**Generated:** 2026-08-07T15:55:14  
 **Panels:** BetaThon dry-run extracts (World Bank WDI + Eurostat), local CSV mirror of Snowflake `BETATHON`.
 
 ## 1 · Ingestion
@@ -94,6 +94,15 @@ Drafted grounding pack:
 > Same data, two beliefs — the “effort” belief calls 3 countries a success that “completion” does not (Colombia, Germany, South Africa). Both provably right, each under its own belief.
 
 - ✅ timeline separates belief changes from data runs — 2 belief · 3 data events
+
+## 7 · Memory substrate — remembered and recalled
+
+Storage root (scratch): `/Users/cworks/PLATFORM/APPLICATIONS/iDataSight/data/store/test_everos` — pack plane holds ['v1.json', 'v2.json'], episodes plane holds 2 booked runs.
+
+- ✅ belief versions remembered append-only in the pack plane — v1.json, v2.json
+- ✅ SKILL.md is the canon of the latest ratified declaration
+- ✅ recall returns the remembered v2 with its parsed thresholds — v2 · high ≥ 95
+- ✅ every wdi run is booked as an episode in memory — episodes [2, 3] vs ledger rows [2, 3]
 
 ## Verdict
 
