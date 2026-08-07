@@ -1,6 +1,6 @@
 # iDataSight — engine test run on real data
 
-**Generated:** 2026-08-07T16:08:03  
+**Generated:** 2026-08-07T16:18:35  
 **Panels:** BetaThon dry-run extracts (World Bank WDI + Eurostat), local CSV mirror of Snowflake `BETATHON`.
 
 ## 1 · Ingestion

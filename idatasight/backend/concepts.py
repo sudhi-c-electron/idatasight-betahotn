@@ -182,6 +182,7 @@ def list_beliefs(ds_id: str = "") -> list[MemoryItem]:
                 name=latest.get("display_name", latest["concept"]),
                 note=note,
                 highlight=latest.get("origin", "").startswith("ratified"),
+                dataset_id=i,
             )
         )
     if not any(m.highlight for m in items) and items:

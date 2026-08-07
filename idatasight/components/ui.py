@@ -139,7 +139,13 @@ def tile(t: Tile) -> rx.Component:
 
 
 def mem_card(item: MemoryItem) -> rx.Component:
-    """Rail memory entry (the wireframe's .mem). Safe inside rx.foreach."""
+    """Rail memory entry (the wireframe's .mem). Safe inside rx.foreach.
+
+    Belief entries carry a dataset_id and are selectable — clicking one opens
+    that belief for work. Ledger rows carry none and stay inert.
+    """
+    from ..state import AppState  # late import — ui is otherwise state-free
+
     return rx.el.div(
         item.name,
         rx.el.span(
@@ -156,6 +162,13 @@ def mem_card(item: MemoryItem) -> rx.Component:
         font_size="12px",
         font_weight="600",
         line_height="1.4",
+        cursor=rx.cond(item.dataset_id != "", "pointer", "default"),
+        _hover=rx.cond(
+            item.dataset_id != "",
+            {"border_color": Color.accent},
+            {},
+        ),
+        on_click=AppState.select_belief(item.dataset_id),
     )
 
 

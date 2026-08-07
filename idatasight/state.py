@@ -99,6 +99,7 @@ class AppState(rx.State):
     @rx.event
     async def load_datasets(self):
         self.beliefs = await call(m.ListBeliefs()) or []
+        self._mark_selected()
         self.datasets = await call(m.ListDatasets()) or []
         if self.datasets and not self.selected_dataset_id:
             self.selected_dataset_id = self.datasets[0].id
@@ -110,12 +111,38 @@ class AppState(rx.State):
             or []
         )
 
-    @rx.event
-    async def select_dataset(self, dataset_id: str):
+    def _mark_selected(self):
+        """Highlight the rail entry whose belief is the current context."""
+        for b in self.beliefs:
+            b.highlight = b.dataset_id == self.selected_dataset_id
+
+    async def _switch_context(self, dataset_id: str):
+        """Move the working context to another dataset's belief."""
         self.selected_dataset_id = dataset_id
         self.has_run = False  # next analysis judges the newly chosen dataset
-        self.beliefs = await call(m.ListBeliefs(dataset_id=dataset_id)) or []
+        self.drafted = False
+        self.draft_fields = []
+        self.ratified_version = ""
+        self.ratify_error = ""
+        self.hypothesis = ""
+        remembered = await call(m.RecallBelief(dataset_id=dataset_id))
+        if remembered:
+            self.hypothesis = remembered.get("statement", "")
+        self.beliefs = await call(m.ListBeliefs()) or []
+        self._mark_selected()
         await self._load_columns()
+
+    @rx.event
+    async def select_dataset(self, dataset_id: str):
+        await self._switch_context(dataset_id)
+
+    @rx.event
+    async def select_belief(self, dataset_id: str):
+        """Rail click — open that belief for work."""
+        if not dataset_id:
+            return
+        await self._switch_context(dataset_id)
+        return rx.redirect("/beliefs")
 
     @rx.event
     async def refresh_dataset(self):
@@ -134,7 +161,9 @@ class AppState(rx.State):
 
     @rx.event
     async def load_beliefs_page(self):
+        self.selected_dataset_id = self.selected_dataset_id or "wdi"
         self.beliefs = await call(m.ListBeliefs()) or []
+        self._mark_selected()
         if not self.hypothesis:
             remembered = await call(
                 m.RecallBelief(dataset_id=self.selected_dataset_id or "wdi")
@@ -176,9 +205,17 @@ class AppState(rx.State):
 
     @rx.event
     def set_field_value(self, key: str, value: str):
+        """Blur commits the edit and leaves editing mode."""
         for f in self.draft_fields:
             if f.key == key:
                 f.value = value
+                f.editing = False
+
+    @rx.event
+    def finish_edit(self, key: str):
+        for f in self.draft_fields:
+            if f.key == key:
+                f.editing = False
 
     @rx.event
     async def ratify_belief(self):
@@ -194,6 +231,7 @@ class AppState(rx.State):
             self.remembered_on = result.remembered_on
             self.ratify_error = ""
             self.beliefs = await call(m.ListBeliefs()) or []
+            self._mark_selected()
             self.has_run = False  # next run recalls the new version
         else:
             self.ratified_version = ""
@@ -223,7 +261,9 @@ class AppState(rx.State):
 
     @rx.event
     async def load_analysis(self):
+        self.selected_dataset_id = self.selected_dataset_id or "wdi"
         self.beliefs = await call(m.ListBeliefs()) or []
+        self._mark_selected()
         if not self.has_run:
             await self.run_analysis()
 
@@ -248,7 +288,9 @@ class AppState(rx.State):
 
     @rx.event
     async def load_memory(self):
+        self.selected_dataset_id = self.selected_dataset_id or "wdi"
         self.beliefs = await call(m.ListBeliefs()) or []
+        self._mark_selected()
         history = await call(
             m.FetchBeliefHistory(belief_id=self.selected_dataset_id or "wdi")
         )

@@ -40,6 +40,7 @@ class MemoryItem:
     name: str = ""
     note: str = ""             # e.g. "v1 · remembered"
     highlight: bool = False
+    dataset_id: str = ""       # set for belief entries — makes them selectable
 
 
 @dataclasses.dataclass

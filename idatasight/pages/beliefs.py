@@ -54,7 +54,12 @@ def field_row(f: GroundingField) -> rx.Component:
         rx.el.div(
             rx.cond(
                 f.editing,
-                chip("✎ editing…", "solid"),
+                chip(
+                    "✓ done",
+                    "solid",
+                    cursor="pointer",
+                    on_click=AppState.finish_edit(f.key),
+                ),
                 rx.fragment(
                     chip(
                         rx.cond(f.ratified, "✓ ratified", "✓"),

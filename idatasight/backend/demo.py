@@ -199,9 +199,11 @@ HISTORY = BeliefHistory(
 )
 
 BELIEFS = [
-    MemoryItem("Spending ≠ completion", "v1 · remembered", highlight=True),
-    MemoryItem("Fiscal effort", "v1"),
-    MemoryItem("Export orientation", "v1"),
+    MemoryItem(
+        "Spending ≠ completion", "v1 · remembered", highlight=True, dataset_id="wdi"
+    ),
+    MemoryItem("Fiscal effort", "v1", dataset_id="fiscal"),
+    MemoryItem("Export orientation", "v1", dataset_id="trade"),
 ]
 
 
