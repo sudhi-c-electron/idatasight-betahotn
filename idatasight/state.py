@@ -51,6 +51,7 @@ class AppState(rx.State):
     drafted: bool = False
     ratified_version: str = ""
     remembered_on: str = ""
+    ratify_error: str = ""
 
     # --- Analysis ----------------------------------------------------------
     belief_label: str = ""
@@ -134,8 +135,14 @@ class AppState(rx.State):
     @rx.event
     async def load_beliefs_page(self):
         self.beliefs = await call(m.ListBeliefs()) or []
-        if DEMO_MODE and not self.hypothesis:
-            self.hypothesis = demo.HYPOTHESIS
+        if not self.hypothesis:
+            remembered = await call(
+                m.RecallBelief(dataset_id=self.selected_dataset_id or "wdi")
+            )
+            if remembered:
+                self.hypothesis = remembered.get("statement", "")
+            elif DEMO_MODE:
+                self.hypothesis = demo.HYPOTHESIS
 
     @rx.event
     def set_hypothesis(self, value: str):
@@ -185,8 +192,15 @@ class AppState(rx.State):
         if result:
             self.ratified_version = result.version
             self.remembered_on = result.remembered_on
+            self.ratify_error = ""
             self.beliefs = await call(m.ListBeliefs()) or []
             self.has_run = False  # next run recalls the new version
+        else:
+            self.ratified_version = ""
+            self.ratify_error = (
+                "not remembered — the commit to memory failed; "
+                "nothing was written. Check the app log and ratify again."
+            )
 
     # --- Analysis ----------------------------------------------------------
 

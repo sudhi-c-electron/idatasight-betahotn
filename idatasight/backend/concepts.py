@@ -99,16 +99,28 @@ def ensure_seed(ds_id: str) -> None:
 def draft_grounding(hypothesis: str, ds_id: str) -> GroundingDraft:
     """Distill plain words into a proposed grounding pack.
 
-    Deterministic distillation (BetaThon style, no LLM): the dataset's bound
-    formal Concept supplies the anatomy; the hypothesis stays the statement.
+    Reopening a belief drafts from the latest remembered version — the
+    proposal you see is what memory holds, not the factory seed. The seed
+    config only fills fields memory doesn't carry. Deterministic distillation
+    (BetaThon style, no LLM); the hypothesis stays the statement.
     """
+    ensure_seed(ds_id)
     cfg = warehouse.concept_cfg(ds_id)
+    remembered = _versions(ds_id)[-1].get("fields") or {}
+    defaults = {
+        "Definition": cfg["definition"],
+        "Primary": cfg["primary"],
+        "Forbidden": _forbidden_text(cfg),
+        "Threshold": _threshold_text(cfg),
+    }
     return GroundingDraft(
         fields=[
-            GroundingField(key="Definition", value=cfg["definition"]),
-            GroundingField(key="Primary", value=cfg["primary"], mono=True),
-            GroundingField(key="Forbidden", value=_forbidden_text(cfg)),
-            GroundingField(key="Threshold", value=_threshold_text(cfg)),
+            GroundingField(
+                key=key,
+                value=remembered.get(key) or defaults[key],
+                mono=(key == "Primary"),
+            )
+            for key in ("Definition", "Primary", "Forbidden", "Threshold")
         ]
     )
 

@@ -176,11 +176,14 @@ def analyze(ds_id: str, belief: dict) -> AnalysisResult:
         evaluable += 1
         fidelity = grade(pv, high, moderate, inverted)
         success = fidelity == "high"
+        # Three bands, per wireframe 1f — a moderate-threshold edit must be
+        # visible in the verdicts, not collapsed into "Not yet".
+        label = {"high": "Success", "moderate": "Moderate", "low": "Not yet"}[fidelity]
         verdicts.append(
             Verdict(
                 entity,
                 _fmt_verdict(pv, unit, high, moderate, inverted),
-                "Success" if success else "Not yet",
+                label,
             )
         )
 

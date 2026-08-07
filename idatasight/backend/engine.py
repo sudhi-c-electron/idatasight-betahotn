@@ -96,6 +96,8 @@ def handle(msg: Any) -> Any:
             return concepts.ratify(ds_id or "wdi", s, f)
         case m.ListBeliefs(dataset_id=ds_id):
             return concepts.list_beliefs(ds_id)
+        case m.RecallBelief(dataset_id=ds_id):
+            return concepts.current(ds_id or "wdi")
         case m.FetchBeliefHistory(belief_id=belief_id):
             ds_id = belief_id if belief_id in warehouse.REGISTRY else "wdi"
             return concepts.history(ds_id, ledger_store.runs())

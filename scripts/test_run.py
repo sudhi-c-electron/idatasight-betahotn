@@ -137,6 +137,18 @@ def main() -> int:
         v2_success < v1_success,
         f"Success verdicts {v1_success} → {v2_success} (High ≥ 90 → 95)",
     )
+
+    redraft = engine.handle(
+        m.DraftGrounding(hypothesis="reopening the belief", dataset_id="wdi")
+    )
+    redraft_threshold = next(
+        f.value for f in redraft.fields if f.key == "Threshold"
+    )
+    check(
+        "reopening drafts from the remembered belief, not the seed",
+        "95" in redraft_threshold,
+        redraft_threshold,
+    )
     lines.append("")
 
     # ── 3 · Analysis ───────────────────────────────────────────────────────

@@ -66,6 +66,13 @@ class ListBeliefs:
 
 
 @dataclass(frozen=True)
+class RecallBelief:
+    """The latest remembered version of a dataset's belief, verbatim."""
+
+    dataset_id: str
+
+
+@dataclass(frozen=True)
 class FetchBeliefHistory:
     """Both histories of one belief — belief changes and data updates."""
 

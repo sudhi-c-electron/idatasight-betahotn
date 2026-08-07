@@ -18,7 +18,6 @@ from ..models import (
     LedgerData,
     LedgerPoint,
     MemoryItem,
-    RatifyResult,
     Receipt,
     Tile,
     TimelineEvent,
@@ -103,8 +102,6 @@ GROUNDING_DRAFT = GroundingDraft(
         GroundingField(key="Threshold", value="High ≥ 90% · Moderate ≥ 75%"),
     ]
 )
-
-RATIFY_RESULT = RatifyResult(version="v1", remembered_on="Aug 7, 2026")
 
 ANALYSIS = AnalysisResult(
     belief_label="Under: Spending ≠ completion · v1",
@@ -220,7 +217,9 @@ def reply(msg: Any) -> Any:
         case m.DraftGrounding():
             return GROUNDING_DRAFT
         case m.RatifyBelief():
-            return RATIFY_RESULT
+            # Writes are never demo-faked: a failed remember must surface as
+            # a failure, not a fabricated "remembered" confirmation.
+            return None
         case m.ListBeliefs():
             return BELIEFS
         case m.FetchBeliefHistory():

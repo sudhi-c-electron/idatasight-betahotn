@@ -1,6 +1,6 @@
 # iDataSight — engine test run on real data
 
-**Generated:** 2026-08-07T15:55:14  
+**Generated:** 2026-08-07T16:08:03  
 **Panels:** BetaThon dry-run extracts (World Bank WDI + Eurostat), local CSV mirror of Snowflake `BETATHON`.
 
 ## 1 · Ingestion
@@ -30,6 +30,7 @@ Drafted grounding pack:
 - ✅ draft carries the four pack fields
 - ✅ ratified as a new version (never overwrites) — v2 · Aug 7, 2026
 - ✅ tightened threshold moved verdicts on the same data — Success verdicts 17 → 13 (High ≥ 90 → 95)
+- ✅ reopening drafts from the remembered belief, not the seed — High ≥ 95% · Moderate ≥ 75%
 
 ## 3 · Analysis — verdicts · traps · receipt
 

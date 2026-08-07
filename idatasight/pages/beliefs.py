@@ -121,6 +121,11 @@ def beliefs_page() -> rx.Component:
             rx.fragment(),
         ),
         rx.cond(
+            AppState.ratify_error != "",
+            note(AppState.ratify_error, color=Color.accent, margin_bottom=Space.s3),
+            rx.fragment(),
+        ),
+        rx.cond(
             AppState.ratified_version != "",
             card(
                 rx.el.span(
