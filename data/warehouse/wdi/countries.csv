@@ -1,0 +1,30 @@
+iso3,iso2,name,region,income_level
+ARG,AR,Argentina,Latin America & Caribbean ,Upper middle income
+AUS,AU,Australia,East Asia & Pacific,High income
+BRA,BR,Brazil,Latin America & Caribbean ,Upper middle income
+CAN,CA,Canada,North America,High income
+CHN,CN,China,East Asia & Pacific,Upper middle income
+DEU,DE,Germany,Europe & Central Asia,High income
+ESP,ES,Spain,Europe & Central Asia,High income
+FRA,FR,France,Europe & Central Asia,High income
+GBR,GB,United Kingdom,Europe & Central Asia,High income
+IDN,ID,Indonesia,East Asia & Pacific,Upper middle income
+IND,IN,India,South Asia,Lower middle income
+ITA,IT,Italy,Europe & Central Asia,High income
+JPN,JP,Japan,East Asia & Pacific,High income
+KOR,KR,"Korea, Rep.",East Asia & Pacific,High income
+MEX,MX,Mexico,Latin America & Caribbean ,Upper middle income
+NLD,NL,Netherlands,Europe & Central Asia,High income
+POL,PL,Poland,Europe & Central Asia,High income
+SWE,SE,Sweden,Europe & Central Asia,High income
+USA,US,United States,North America,High income
+ZAF,ZA,South Africa,Sub-Saharan Africa ,Upper middle income
+CHL,CL,Chile,Latin America & Caribbean ,High income
+COL,CO,Colombia,Latin America & Caribbean ,Upper middle income
+EGY,EG,"Egypt, Arab Rep.","Middle East, North Africa, Afghanistan & Pakistan",Lower middle income
+NGA,NG,Nigeria,Sub-Saharan Africa ,Lower middle income
+RUS,RU,Russian Federation,Europe & Central Asia,High income
+SAU,SA,Saudi Arabia,"Middle East, North Africa, Afghanistan & Pakistan",High income
+SGP,SG,Singapore,East Asia & Pacific,High income
+TUR,TR,Turkiye,Europe & Central Asia,Upper middle income
+VNM,VN,Viet Nam,East Asia & Pacific,Upper middle income

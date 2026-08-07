@@ -1,0 +1,49 @@
+{
+  "namespace": "datasets.labor_hc",
+  "name": "labor_force_engagement",
+  "display_name": "Labor Force Engagement",
+  "type": "concept",
+  "domain": "labor_education",
+  "version": 1,
+  "status": "formal",
+  "origin": "analytic",
+  "world": "actual",
+  "genetic_identity": "Labor force engagement is participation in the labor force among the working-age population \u2014 not unemployment alone, literacy, or school enrollment.",
+  "boundaries": {
+    "includes": [
+      "Primary series SL.TLF.CACT.ZS",
+      "Country/entity-year non-null observations"
+    ],
+    "excludes": [
+      "Low unemployment as engagement",
+      "Youth literacy as labor engagement",
+      "School enrollment as labor engagement"
+    ]
+  },
+  "series_bindings": {
+    "primary": "SL.TLF.CACT.ZS",
+    "secondary": "SL.UEM.TOTL.ZS",
+    "contrast_forbidden_as_proxy": [
+      "SE.SEC.ENRR",
+      "SE.ADT.1524.LT.ZS",
+      "NY.GDP.PCAP.CD",
+      "SL.UEM.TOTL.ZS"
+    ]
+  },
+  "thresholds": {
+    "high": 65.0,
+    "moderate": 55.0
+  },
+  "rules": [
+    {
+      "name": "no_forbidden_proxy",
+      "statement": "Using forbidden proxy series for success leaves this concept."
+    },
+    {
+      "name": "null_outside_envelope",
+      "statement": "Missing primary observation is outside envelope, not low fidelity."
+    }
+  ],
+  "dataset": "labor_hc",
+  "source": "World Bank WDI (labor + youth literacy)"
+}

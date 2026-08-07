@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Reflex generated frontend + state
+.web/
+.states/
+*.db
+
+# App runtime store — belief versions + run ledger accumulate locally;
+# fresh clones re-seed from data/concepts/ and the dry-run proof.
+# (EverOS integration will replace this store entirely.)
+data/store/
+
+# Local debris
+.DS_Store
+debug_screenshots/

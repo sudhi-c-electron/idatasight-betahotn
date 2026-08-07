@@ -1,0 +1,105 @@
+{
+  "namespace": "education.finance",
+  "name": "public_education_effort",
+  "display_name": "Public Education Effort",
+  "type": "concept",
+  "domain": "education",
+  "version": 1,
+  "status": "formal",
+  "origin": "analytic",
+  "world": "actual",
+  "genetic_identity": "Public education effort is the scale of government resource commitment to education as a share of economic output and/or public budgets — an input/priority measure, not a learning or completion outcome.",
+  "description": "Concept for measuring how much of the public purse and economy is allocated to education. Success under this concept is not the same as success under secondary completion. Primary bindings: SE.XPD.TOTL.GD.ZS and SE.XPD.TOTL.GB.ZS.",
+  "atoms": [
+    {
+      "name": "is_resource_commitment",
+      "statement": "Public education effort is a measure of government resource commitment to education, not of student outcomes."
+    },
+    {
+      "name": "has_gdp_share_face",
+      "statement": "One face of effort is government education expenditure as a percentage of GDP (WDI SE.XPD.TOTL.GD.ZS)."
+    },
+    {
+      "name": "has_budget_share_face",
+      "statement": "Another face of effort is government education expenditure as a percentage of total government expenditure (WDI SE.XPD.TOTL.GB.ZS)."
+    },
+    {
+      "name": "is_country_year_evaluable",
+      "statement": "Effort is evaluable for a country-year when at least one of the two expenditure shares is non-null."
+    },
+    {
+      "name": "success_is_not_completion",
+      "statement": "High public education effort does not by itself entail high secondary completion; those are separate concepts."
+    },
+    {
+      "name": "is_independent_of_enrollment_levels",
+      "statement": "Effort is independent of enrollment rates; large systems and small systems can show similar expenditure shares."
+    }
+  ],
+  "rules": [
+    {
+      "name": "must_not_treat_effort_as_outcome",
+      "statement": "Treating high spend % GDP as proof of educational outcome success leaves this concept and invents an outcome concept without warrant."
+    },
+    {
+      "name": "must_not_use_total_gov_expense_alone",
+      "statement": "General government expense % GDP (GC.XPN.TOTL.GD.ZS) without education share is not public education effort."
+    },
+    {
+      "name": "null_not_low_effort",
+      "statement": "Missing expenditure observations are outside the evaluable envelope, not scored as zero effort."
+    }
+  ],
+  "boundaries": {
+    "includes": [
+      "Education expenditure % GDP (SE.XPD.TOTL.GD.ZS).",
+      "Education expenditure % government expenditure (SE.XPD.TOTL.GB.ZS).",
+      "Country-year instances with at least one non-null education expenditure share."
+    ],
+    "excludes": [
+      "Secondary or tertiary enrollment as effort.",
+      "Secondary completion as effort.",
+      "GDP per capita as effort.",
+      "Total government expense % GDP alone.",
+      "Private household education spending (not in this panel).",
+      "Learning outcomes / test scores."
+    ]
+  },
+  "fidelity_envelope": {
+    "holds_within": [
+      "National WDI aggregates 2010–2023",
+      "Country-year grain",
+      "Public (government) education expenditure shares"
+    ],
+    "breaks_at": [
+      "Private spending dominance without public series",
+      "Subnational budgets",
+      "Outcome claims derived only from spend"
+    ]
+  },
+  "relations": [
+    {"type": "composes_with", "target": "education.outcomes.secondary_completion", "note": "Effort × outcome are distinct dimensions."},
+    {"type": "constrains", "target": "education.access.secondary_enrollment", "note": "Enrollment is not effort."}
+  ],
+  "series_bindings": {
+    "primary": ["SE.XPD.TOTL.GD.ZS", "SE.XPD.TOTL.GB.ZS"],
+    "contrast_forbidden_as_proxy": ["SE.SEC.ENRR", "SE.SEC.CMPT.LO.ZS", "SE.TER.ENRR", "NY.GDP.PCAP.CD", "GC.XPN.TOTL.GD.ZS"],
+    "supporting_context_only": ["SP.POP.TOTL", "NY.GDP.PCAP.CD"]
+  },
+  "thresholds": {
+    "high_gdp_share_min": 5.0,
+    "moderate_gdp_share_min": 3.5,
+    "high_gov_share_min": 15.0,
+    "moderate_gov_share_min": 10.0
+  },
+  "glossary": {
+    "effort": "Public resource commitment to education as share of GDP and/or government budget.",
+    "expenditure_share": "Education spending as a percentage of a stated aggregate (GDP or total government expenditure)."
+  },
+  "exemplars": [
+    {
+      "name": "high_spend_low_completion",
+      "description": "A country-year with education % GDP above threshold and completion below threshold proves the two concepts can diverge — both may be correctly evaluated on the same panel."
+    }
+  ]
+}

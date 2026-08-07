@@ -1,0 +1,279 @@
+{
+  "dataset": "inequality",
+  "title": "Income Inequality & Poverty",
+  "source": "World Bank WDI (inequality/poverty)",
+  "entities_latest": 29,
+  "evaluable": 12,
+  "fidelity_counts": {
+    "high": 6,
+    "moderate": 2,
+    "low": 4,
+    "outside": 17
+  },
+  "proxy_trap_entities": 12,
+  "grounding": {
+    "context_tokens_est": {
+      "ungrounded": 640,
+      "grounded": 200,
+      "reduction_pct": 68.8
+    },
+    "series_touches": {
+      "ungrounded": 106,
+      "grounded": 12,
+      "reduction_pct": 88.7
+    },
+    "invalid_proxy_uses": {
+      "ungrounded": 70,
+      "grounded": 0
+    },
+    "accuracy_vs_concept": {
+      "ungrounded_match_pct": 50.0,
+      "grounded_match_pct": 100.0,
+      "disagreements": 6
+    },
+    "thesis_proven": {
+      "token_context_reduction": true,
+      "series_touch_reduction": true,
+      "zero_invalid_proxies_when_grounded": true,
+      "ungrounded_disagrees_or_proxy_risk": true
+    }
+  },
+  "trap_samples": [
+    {
+      "entity": "Argentina",
+      "key": "ARG",
+      "year": 2023,
+      "primary_value": 42.4,
+      "fidelity": "low",
+      "forbidden_present": [
+        "SI.POV.DDAY",
+        "NY.GNP.PCAP.CD",
+        "SP.URB.TOTL.IN.ZS"
+      ]
+    },
+    {
+      "entity": "Brazil",
+      "key": "BRA",
+      "year": 2023,
+      "primary_value": 51.5,
+      "fidelity": "low",
+      "forbidden_present": [
+        "SI.POV.DDAY",
+        "NY.GNP.PCAP.CD",
+        "SP.URB.TOTL.IN.ZS"
+      ]
+    },
+    {
+      "entity": "Colombia",
+      "key": "COL",
+      "year": 2023,
+      "primary_value": 54.6,
+      "fidelity": "low",
+      "forbidden_present": [
+        "SI.POV.DDAY",
+        "NY.GNP.PCAP.CD",
+        "SP.URB.TOTL.IN.ZS"
+      ]
+    },
+    {
+      "entity": "Spain",
+      "key": "ESP",
+      "year": 2023,
+      "primary_value": 33.4,
+      "fidelity": "high",
+      "forbidden_present": [
+        "SI.POV.DDAY",
+        "NY.GNP.PCAP.CD",
+        "SP.URB.TOTL.IN.ZS"
+      ]
+    },
+    {
+      "entity": "France",
+      "key": "FRA",
+      "year": 2023,
+      "primary_value": 31.8,
+      "fidelity": "high",
+      "forbidden_present": [
+        "SI.POV.DDAY",
+        "NY.GNP.PCAP.CD",
+        "SP.URB.TOTL.IN.ZS"
+      ]
+    },
+    {
+      "entity": "Indonesia",
+      "key": "IDN",
+      "year": 2023,
+      "primary_value": 36.1,
+      "fidelity": "moderate",
+      "forbidden_present": [
+        "SI.POV.DDAY",
+        "NY.GNP.PCAP.CD",
+        "SP.URB.TOTL.IN.ZS"
+      ]
+    },
+    {
+      "entity": "Italy",
+      "key": "ITA",
+      "year": 2023,
+      "primary_value": 34.3,
+      "fidelity": "high",
+      "forbidden_present": [
+        "SI.POV.DDAY",
+        "NY.GNP.PCAP.CD",
+        "SP.URB.TOTL.IN.ZS"
+      ]
+    },
+    {
+      "entity": "Poland",
+      "key": "POL",
+      "year": 2023,
+      "primary_value": 28.5,
+      "fidelity": "high",
+      "forbidden_present": [
+        "SI.POV.DDAY",
+        "NY.GNP.PCAP.CD",
+        "SP.URB.TOTL.IN.ZS"
+      ]
+    },
+    {
+      "entity": "Russian Federation",
+      "key": "RUS",
+      "year": 2023,
+      "primary_value": 33.0,
+      "fidelity": "high",
+      "forbidden_present": [
+        "SI.POV.DDAY",
+        "NY.GNP.PCAP.CD",
+        "SP.URB.TOTL.IN.ZS"
+      ]
+    },
+    {
+      "entity": "Sweden",
+      "key": "SWE",
+      "year": 2023,
+      "primary_value": 29.3,
+      "fidelity": "high",
+      "forbidden_present": [
+        "SI.POV.DDAY",
+        "NY.GNP.PCAP.CD",
+        "SP.URB.TOTL.IN.ZS"
+      ]
+    }
+  ],
+  "case_samples": [
+    {
+      "entity_id": "ARG",
+      "entity_name": "Argentina",
+      "year": 2023,
+      "concept": "income_equality",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "low",
+      "success": false,
+      "primary_value": 42.4,
+      "secondary_value": 47.8,
+      "series_available": 6,
+      "invalid_proxy_series_count": 3
+    },
+    {
+      "entity_id": "BRA",
+      "entity_name": "Brazil",
+      "year": 2023,
+      "concept": "income_equality",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "low",
+      "success": false,
+      "primary_value": 51.5,
+      "secondary_value": 56.5,
+      "series_available": 6,
+      "invalid_proxy_series_count": 3
+    },
+    {
+      "entity_id": "COL",
+      "entity_name": "Colombia",
+      "year": 2023,
+      "concept": "income_equality",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "low",
+      "success": false,
+      "primary_value": 54.6,
+      "secondary_value": 59.2,
+      "series_available": 6,
+      "invalid_proxy_series_count": 3
+    },
+    {
+      "entity_id": "ESP",
+      "entity_name": "Spain",
+      "year": 2023,
+      "concept": "income_equality",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "high",
+      "success": true,
+      "primary_value": 33.4,
+      "secondary_value": 40.2,
+      "series_available": 6,
+      "invalid_proxy_series_count": 3
+    },
+    {
+      "entity_id": "FRA",
+      "entity_name": "France",
+      "year": 2023,
+      "concept": "income_equality",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "high",
+      "success": true,
+      "primary_value": 31.8,
+      "secondary_value": 39.7,
+      "series_available": 6,
+      "invalid_proxy_series_count": 3
+    },
+    {
+      "entity_id": "IDN",
+      "entity_name": "Indonesia",
+      "year": 2023,
+      "concept": "income_equality",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "moderate",
+      "success": false,
+      "primary_value": 36.1,
+      "secondary_value": 44.6,
+      "series_available": 6,
+      "invalid_proxy_series_count": 3
+    },
+    {
+      "entity_id": "ITA",
+      "entity_name": "Italy",
+      "year": 2023,
+      "concept": "income_equality",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "high",
+      "success": true,
+      "primary_value": 34.3,
+      "secondary_value": 41.1,
+      "series_available": 6,
+      "invalid_proxy_series_count": 3
+    },
+    {
+      "entity_id": "POL",
+      "entity_name": "Poland",
+      "year": 2023,
+      "concept": "income_equality",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "high",
+      "success": true,
+      "primary_value": 28.5,
+      "secondary_value": 37.3,
+      "series_available": 6,
+      "invalid_proxy_series_count": 3
+    }
+  ],
+  "primary_series": "SI.POV.GINI",
+  "concept_name": "income_equality"
+}

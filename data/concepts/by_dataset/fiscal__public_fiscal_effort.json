@@ -1,0 +1,47 @@
+{
+  "namespace": "datasets.fiscal",
+  "name": "public_fiscal_effort",
+  "display_name": "Public Fiscal Effort",
+  "type": "concept",
+  "domain": "public_spending",
+  "version": 1,
+  "status": "formal",
+  "origin": "analytic",
+  "world": "actual",
+  "genetic_identity": "Public fiscal effort is the scale of government revenue and expenditure relative to GDP \u2014 a measure of public-sector resource mobilization and outlay, not of education or trade outcomes.",
+  "boundaries": {
+    "includes": [
+      "Primary series GC.XPN.TOTL.GD.ZS",
+      "Country/entity-year non-null observations"
+    ],
+    "excludes": [
+      "GDP per capita as fiscal effort",
+      "Debt stock as effort",
+      "Education completion as fiscal success"
+    ]
+  },
+  "series_bindings": {
+    "primary": "GC.XPN.TOTL.GD.ZS",
+    "secondary": "GC.TAX.TOTL.GD.ZS",
+    "contrast_forbidden_as_proxy": [
+      "NY.GDP.PCAP.CD",
+      "GC.DOD.TOTL.GD.ZS"
+    ]
+  },
+  "thresholds": {
+    "high": 35.0,
+    "moderate": 25.0
+  },
+  "rules": [
+    {
+      "name": "no_forbidden_proxy",
+      "statement": "Using forbidden proxy series for success leaves this concept."
+    },
+    {
+      "name": "null_outside_envelope",
+      "statement": "Missing primary observation is outside envelope, not low fidelity."
+    }
+  ],
+  "dataset": "fiscal",
+  "source": "World Bank WDI (fiscal indicators)"
+}

@@ -1,0 +1,126 @@
+{
+  "namespace": "education.outcomes",
+  "name": "secondary_completion",
+  "display_name": "Secondary Completion",
+  "type": "concept",
+  "domain": "education",
+  "version": 1,
+  "status": "formal",
+  "origin": "analytic",
+  "world": "actual",
+  "genetic_identity": "Secondary completion is the attainment of a recognized lower- or upper-secondary school-leaving milestone by the relevant age cohort — a flow outcome of the schooling system, not mere presence in school.",
+  "description": "A Concept for judging educational system success by completion of secondary schooling among the relevant age group. Distinct from enrollment (access/participation) and from public spending effort. Grounded against WDI series SE.SEC.CMPT.LO.ZS (primary atom) with related series as supporting context only when envelope allows.",
+  "atoms": [
+    {
+      "name": "is_outcome_not_access",
+      "statement": "Secondary completion is an outcome of schooling — whether the relevant age group finishes a secondary level — not a measure of how many students are currently enrolled."
+    },
+    {
+      "name": "requires_relevant_age_cohort",
+      "statement": "Secondary completion is defined relative to a relevant age cohort for the level completed; rates without cohort denominators are not instances of this concept."
+    },
+    {
+      "name": "is_country_year_evaluable",
+      "statement": "Secondary completion can be evaluated for a country-year when a recognized completion-rate series for that country-year is present and non-null."
+    },
+    {
+      "name": "has_primary_series_binding",
+      "statement": "Within the World Bank WDI envelope, the primary measurable atom binds to lower secondary completion rate, total (% of relevant age group), indicator SE.SEC.CMPT.LO.ZS."
+    },
+    {
+      "name": "success_is_high_completion_not_high_enrollment",
+      "statement": "Success under this concept is high completion of the secondary level by the cohort; high secondary enrollment without completion does not constitute success under this concept."
+    },
+    {
+      "name": "is_independent_of_expenditure_level",
+      "statement": "Secondary completion as an outcome is independent of the level of public education expenditure; spend is a different concept (public education effort)."
+    },
+    {
+      "name": "admits_threshold_fidelity",
+      "statement": "Fidelity of an instance can be graded by the completion rate against declared thresholds (e.g. high / moderate / low) without changing the genetic identity of the concept."
+    }
+  ],
+  "rules": [
+    {
+      "name": "must_not_use_enrollment_as_proxy",
+      "statement": "A judgment that uses secondary or tertiary enrollment rates as a proxy for completion has left this concept."
+    },
+    {
+      "name": "must_not_use_spend_as_proxy",
+      "statement": "A judgment that treats education expenditure (% GDP or % government) as success under this concept has left this concept."
+    },
+    {
+      "name": "null_is_not_failure_of_the_country",
+      "statement": "A missing completion observation is outside the evaluable envelope for that country-year; it is not scored as low completion."
+    },
+    {
+      "name": "gross_enrollment_over_100_is_not_completion",
+      "statement": "Gross enrollment rates above 100% (over-age / repeaters) must never be interpreted as completion rates under this concept."
+    }
+  ],
+  "boundaries": {
+    "includes": [
+      "Lower secondary completion rate for the relevant age group (WDI SE.SEC.CMPT.LO.ZS).",
+      "Country-year instances with non-null completion observations.",
+      "Threshold grading of completion fidelity (high/moderate/low).",
+      "Contrast with enrollment series for breach detection only."
+    ],
+    "excludes": [
+      "Secondary enrollment (SE.SEC.ENRR) as a success metric.",
+      "Tertiary enrollment (SE.TER.ENRR) as a success metric.",
+      "Primary completion alone (SE.PRM.CMPT.ZS) as secondary completion.",
+      "Government education expenditure (SE.XPD.*) as outcome success.",
+      "GDP per capita as education quality.",
+      "Literacy rates as secondary completion.",
+      "Learning proficiency / test scores (not in this panel; different concept).",
+      "School construction counts, teacher headcount, or inputs without completion."
+    ]
+  },
+  "fidelity_envelope": {
+    "holds_within": [
+      "National aggregates published in WDI for years 2010–2023",
+      "Country-year grain",
+      "Lower secondary completion as primary measure",
+      "Cross-country comparison only when completion series is non-null for the same year"
+    ],
+    "breaks_at": [
+      "Subnational / district grain (use SEDA or national microdata instead)",
+      "Learning outcomes / proficiency (different concept)",
+      "Upper-secondary-only systems where lower-secondary series is definitionally mismatched",
+      "Years or countries with null SE.SEC.CMPT.LO.ZS (not evaluable)",
+      "Interpreting gross enrollment >100 as completion"
+    ]
+  },
+  "relations": [
+    {"type": "constrains", "target": "education.access.secondary_enrollment", "note": "Enrollment must not be substituted for completion."},
+    {"type": "composes_with", "target": "education.finance.public_education_effort", "note": "Effort and outcome are joint dimensions of a human-capital CM, not the same concept."},
+    {"type": "requires", "target": "education.outcomes.secondary_completion", "note": "Self-identity anchor for scoring package."}
+  ],
+  "series_bindings": {
+    "primary": "SE.SEC.CMPT.LO.ZS",
+    "contrast_forbidden_as_proxy": ["SE.SEC.ENRR", "SE.TER.ENRR", "SE.XPD.TOTL.GD.ZS", "SE.XPD.TOTL.GB.ZS", "NY.GDP.PCAP.CD"],
+    "supporting_context_only": ["SE.PRM.CMPT.ZS", "SE.SEC.CUAT.UP.ZS", "SP.POP.TOTL"]
+  },
+  "thresholds": {
+    "high_completion_min": 90.0,
+    "moderate_completion_min": 75.0,
+    "low_below": 75.0
+  },
+  "glossary": {
+    "completion_rate": "Share of the relevant age group that completes a stated level of education.",
+    "relevant_age_group": "The age cohort used as the denominator for a completion rate series.",
+    "enrollment": "Participation in school at a level; not completion.",
+    "fidelity": "How well an instance realizes the concept within the envelope (here: completion rate band).",
+    "envelope": "Regime of grain, years, and series where the concept's atoms hold."
+  },
+  "exemplars": [
+    {
+      "name": "france_high_completion",
+      "description": "France with non-null SE.SEC.CMPT.LO.ZS near or above 90 in recent years illustrates in-envelope high fidelity without using enrollment."
+    },
+    {
+      "name": "enrollment_completion_gap",
+      "description": "A country-year with secondary enrollment >> lower-secondary completion shows why enrollment cannot proxy this concept; the case is evaluable on completion and flags out-of-kind analysis if enrollment is used as success."
+    }
+  ]
+}

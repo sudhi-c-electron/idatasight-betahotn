@@ -1,0 +1,68 @@
+{
+  "namespace": "education.access",
+  "name": "secondary_enrollment",
+  "display_name": "Secondary Enrollment",
+  "type": "concept",
+  "domain": "education",
+  "version": 1,
+  "status": "formal",
+  "origin": "analytic",
+  "world": "actual",
+  "genetic_identity": "Secondary enrollment is participation in secondary schooling as measured by enrollment rates — an access/participation concept, not completion of a level.",
+  "description": "Suspected/related concept often silently substituted for secondary completion. Kept explicit so undirected analysis can be shown to leave the completion concept when it uses SE.SEC.ENRR as success.",
+  "atoms": [
+    {
+      "name": "is_participation_measure",
+      "statement": "Secondary enrollment measures participation in secondary school, not finishing it."
+    },
+    {
+      "name": "binds_to_gross_enrollment",
+      "statement": "Within WDI, the primary series is school enrollment, secondary (% gross), SE.SEC.ENRR."
+    },
+    {
+      "name": "gross_rate_may_exceed_100",
+      "statement": "Gross enrollment may exceed 100% due to over-age students and repeaters; that is still enrollment, not completion."
+    },
+    {
+      "name": "is_country_year_evaluable",
+      "statement": "Enrollment is evaluable when SE.SEC.ENRR is non-null for the country-year."
+    }
+  ],
+  "rules": [
+    {
+      "name": "must_not_claim_completion",
+      "statement": "Using this concept's series to claim secondary completion success leaves this concept and invades secondary_completion without warrant."
+    }
+  ],
+  "boundaries": {
+    "includes": [
+      "Secondary enrollment rate SE.SEC.ENRR",
+      "Country-year non-null enrollment observations"
+    ],
+    "excludes": [
+      "Completion rates as enrollment",
+      "Expenditure shares as enrollment",
+      "Tertiary enrollment as secondary enrollment"
+    ]
+  },
+  "fidelity_envelope": {
+    "holds_within": ["National WDI 2010–2023 country-year gross secondary enrollment"],
+    "breaks_at": ["Net enrollment only series without gross", "Completion-as-enrollment confusions"]
+  },
+  "relations": [
+    {"type": "constrains", "target": "education.outcomes.secondary_completion", "note": "Must not be substituted for completion."}
+  ],
+  "series_bindings": {
+    "primary": "SE.SEC.ENRR",
+    "contrast_forbidden_as_proxy": ["SE.SEC.CMPT.LO.ZS"],
+    "supporting_context_only": ["SE.TER.ENRR", "SP.POP.TOTL"]
+  },
+  "thresholds": {
+    "high_enrollment_min": 90.0,
+    "moderate_enrollment_min": 70.0
+  },
+  "glossary": {
+    "gross_enrollment": "Enrollment of all ages in a level as a percentage of the official age group for that level."
+  },
+  "exemplars": []
+}

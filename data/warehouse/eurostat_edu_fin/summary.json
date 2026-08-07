@@ -1,0 +1,158 @@
+{
+  "dataset": "eurostat_edu_fin",
+  "title": "EU Public Education Expenditure by Level",
+  "source": "Eurostat educ_uoe_fine06",
+  "entities_latest": 20,
+  "evaluable": 20,
+  "fidelity_counts": {
+    "high": 0,
+    "moderate": 0,
+    "low": 20,
+    "outside": 0
+  },
+  "proxy_trap_entities": 0,
+  "grounding": {
+    "context_tokens_est": {
+      "ungrounded": 400,
+      "grounded": 200,
+      "reduction_pct": 50.0
+    },
+    "series_touches": {
+      "ungrounded": 291,
+      "grounded": 20,
+      "reduction_pct": 93.1
+    },
+    "invalid_proxy_uses": {
+      "ungrounded": 0,
+      "grounded": 0
+    },
+    "accuracy_vs_concept": {
+      "ungrounded_match_pct": 100.0,
+      "grounded_match_pct": 100.0,
+      "disagreements": 0
+    },
+    "thesis_proven": {
+      "token_context_reduction": true,
+      "series_touch_reduction": true,
+      "zero_invalid_proxies_when_grounded": true,
+      "ungrounded_disagrees_or_proxy_risk": false
+    }
+  },
+  "trap_samples": [],
+  "case_samples": [
+    {
+      "entity_id": "AT",
+      "entity_name": "Austria",
+      "year": 2022,
+      "concept": "eu_public_edu_expenditure",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "low",
+      "success": false,
+      "primary_value": 0.86,
+      "secondary_value": null,
+      "series_available": 17,
+      "invalid_proxy_series_count": 0
+    },
+    {
+      "entity_id": "BE",
+      "entity_name": "Belgium",
+      "year": 2022,
+      "concept": "eu_public_edu_expenditure",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "low",
+      "success": false,
+      "primary_value": 1.57,
+      "secondary_value": null,
+      "series_available": 12,
+      "invalid_proxy_series_count": 0
+    },
+    {
+      "entity_id": "BG",
+      "entity_name": "Bulgaria",
+      "year": 2022,
+      "concept": "eu_public_edu_expenditure",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "low",
+      "success": false,
+      "primary_value": 0.97,
+      "secondary_value": null,
+      "series_available": 15,
+      "invalid_proxy_series_count": 0
+    },
+    {
+      "entity_id": "CZ",
+      "entity_name": "Czechia",
+      "year": 2022,
+      "concept": "eu_public_edu_expenditure",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "low",
+      "success": false,
+      "primary_value": 0.88,
+      "secondary_value": null,
+      "series_available": 18,
+      "invalid_proxy_series_count": 0
+    },
+    {
+      "entity_id": "DE",
+      "entity_name": "Germany",
+      "year": 2022,
+      "concept": "eu_public_edu_expenditure",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "low",
+      "success": false,
+      "primary_value": 0.88,
+      "secondary_value": null,
+      "series_available": 18,
+      "invalid_proxy_series_count": 0
+    },
+    {
+      "entity_id": "DK",
+      "entity_name": "Denmark",
+      "year": 2022,
+      "concept": "eu_public_edu_expenditure",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "low",
+      "success": false,
+      "primary_value": 0.87,
+      "secondary_value": null,
+      "series_available": 15,
+      "invalid_proxy_series_count": 0
+    },
+    {
+      "entity_id": "EL",
+      "entity_name": "Greece",
+      "year": 2022,
+      "concept": "eu_public_edu_expenditure",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "low",
+      "success": false,
+      "primary_value": 0.57,
+      "secondary_value": null,
+      "series_available": 14,
+      "invalid_proxy_series_count": 0
+    },
+    {
+      "entity_id": "ES",
+      "entity_name": "Spain",
+      "year": 2022,
+      "concept": "eu_public_edu_expenditure",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "low",
+      "success": false,
+      "primary_value": 0.93,
+      "secondary_value": null,
+      "series_available": 14,
+      "invalid_proxy_series_count": 0
+    }
+  ],
+  "primary_series": "EDU_EXP_PC_GDP_ED3_4",
+  "concept_name": "eu_public_edu_expenditure"
+}

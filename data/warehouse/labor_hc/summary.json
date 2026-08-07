@@ -1,0 +1,278 @@
+{
+  "dataset": "labor_hc",
+  "title": "Labor & Human Capital Participation",
+  "source": "World Bank WDI (labor + youth literacy)",
+  "entities_latest": 29,
+  "evaluable": 29,
+  "fidelity_counts": {
+    "high": 9,
+    "moderate": 16,
+    "low": 4,
+    "outside": 0
+  },
+  "proxy_trap_entities": 29,
+  "grounding": {
+    "context_tokens_est": {
+      "ungrounded": 640,
+      "grounded": 200,
+      "reduction_pct": 68.8
+    },
+    "series_touches": {
+      "ungrounded": 143,
+      "grounded": 29,
+      "reduction_pct": 79.7
+    },
+    "invalid_proxy_uses": {
+      "ungrounded": 85,
+      "grounded": 0
+    },
+    "accuracy_vs_concept": {
+      "ungrounded_match_pct": 31.0,
+      "grounded_match_pct": 100.0,
+      "disagreements": 20
+    },
+    "thesis_proven": {
+      "token_context_reduction": true,
+      "series_touch_reduction": true,
+      "zero_invalid_proxies_when_grounded": true,
+      "ungrounded_disagrees_or_proxy_risk": true
+    }
+  },
+  "trap_samples": [
+    {
+      "entity": "Argentina",
+      "key": "ARG",
+      "year": 2023,
+      "primary_value": 62.286,
+      "fidelity": "moderate",
+      "forbidden_present": [
+        "SE.SEC.ENRR",
+        "SL.UEM.TOTL.ZS",
+        "NY.GDP.PCAP.CD"
+      ]
+    },
+    {
+      "entity": "Australia",
+      "key": "AUS",
+      "year": 2023,
+      "primary_value": 67.023,
+      "fidelity": "high",
+      "forbidden_present": [
+        "SE.SEC.ENRR",
+        "SL.UEM.TOTL.ZS",
+        "NY.GDP.PCAP.CD"
+      ]
+    },
+    {
+      "entity": "Brazil",
+      "key": "BRA",
+      "year": 2023,
+      "primary_value": 62.915,
+      "fidelity": "moderate",
+      "forbidden_present": [
+        "SE.ADT.1524.LT.ZS",
+        "SL.UEM.TOTL.ZS",
+        "NY.GDP.PCAP.CD"
+      ]
+    },
+    {
+      "entity": "Canada",
+      "key": "CAN",
+      "year": 2023,
+      "primary_value": 65.361,
+      "fidelity": "high",
+      "forbidden_present": [
+        "SE.SEC.ENRR",
+        "SL.UEM.TOTL.ZS",
+        "NY.GDP.PCAP.CD"
+      ]
+    },
+    {
+      "entity": "Chile",
+      "key": "CHL",
+      "year": 2023,
+      "primary_value": 61.521,
+      "fidelity": "moderate",
+      "forbidden_present": [
+        "SE.SEC.ENRR",
+        "SL.UEM.TOTL.ZS",
+        "NY.GDP.PCAP.CD"
+      ]
+    },
+    {
+      "entity": "China",
+      "key": "CHN",
+      "year": 2023,
+      "primary_value": 65.83,
+      "fidelity": "high",
+      "forbidden_present": [
+        "SL.UEM.TOTL.ZS",
+        "NY.GDP.PCAP.CD"
+      ]
+    },
+    {
+      "entity": "Colombia",
+      "key": "COL",
+      "year": 2023,
+      "primary_value": 63.736,
+      "fidelity": "moderate",
+      "forbidden_present": [
+        "SE.ADT.1524.LT.ZS",
+        "SL.UEM.TOTL.ZS",
+        "NY.GDP.PCAP.CD"
+      ]
+    },
+    {
+      "entity": "Germany",
+      "key": "DEU",
+      "year": 2023,
+      "primary_value": 61.05,
+      "fidelity": "moderate",
+      "forbidden_present": [
+        "SE.SEC.ENRR",
+        "SL.UEM.TOTL.ZS",
+        "NY.GDP.PCAP.CD"
+      ]
+    },
+    {
+      "entity": "Egypt, Arab Rep.",
+      "key": "EGY",
+      "year": 2023,
+      "primary_value": 44.669,
+      "fidelity": "low",
+      "forbidden_present": [
+        "SE.SEC.ENRR",
+        "SL.UEM.TOTL.ZS",
+        "NY.GDP.PCAP.CD"
+      ]
+    },
+    {
+      "entity": "Spain",
+      "key": "ESP",
+      "year": 2023,
+      "primary_value": 57.588,
+      "fidelity": "moderate",
+      "forbidden_present": [
+        "SE.SEC.ENRR",
+        "SL.UEM.TOTL.ZS",
+        "NY.GDP.PCAP.CD"
+      ]
+    }
+  ],
+  "case_samples": [
+    {
+      "entity_id": "ARG",
+      "entity_name": "Argentina",
+      "year": 2023,
+      "concept": "labor_force_engagement",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "moderate",
+      "success": false,
+      "primary_value": 62.286,
+      "secondary_value": 6.139,
+      "series_available": 5,
+      "invalid_proxy_series_count": 3
+    },
+    {
+      "entity_id": "AUS",
+      "entity_name": "Australia",
+      "year": 2023,
+      "concept": "labor_force_engagement",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "high",
+      "success": true,
+      "primary_value": 67.023,
+      "secondary_value": 3.668,
+      "series_available": 5,
+      "invalid_proxy_series_count": 3
+    },
+    {
+      "entity_id": "BRA",
+      "entity_name": "Brazil",
+      "year": 2023,
+      "concept": "labor_force_engagement",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "moderate",
+      "success": false,
+      "primary_value": 62.915,
+      "secondary_value": 7.947,
+      "series_available": 5,
+      "invalid_proxy_series_count": 3
+    },
+    {
+      "entity_id": "CAN",
+      "entity_name": "Canada",
+      "year": 2023,
+      "concept": "labor_force_engagement",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "high",
+      "success": true,
+      "primary_value": 65.361,
+      "secondary_value": 5.415,
+      "series_available": 5,
+      "invalid_proxy_series_count": 3
+    },
+    {
+      "entity_id": "CHL",
+      "entity_name": "Chile",
+      "year": 2023,
+      "concept": "labor_force_engagement",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "moderate",
+      "success": false,
+      "primary_value": 61.521,
+      "secondary_value": 9.013,
+      "series_available": 5,
+      "invalid_proxy_series_count": 3
+    },
+    {
+      "entity_id": "CHN",
+      "entity_name": "China",
+      "year": 2023,
+      "concept": "labor_force_engagement",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "high",
+      "success": true,
+      "primary_value": 65.83,
+      "secondary_value": 4.67,
+      "series_available": 4,
+      "invalid_proxy_series_count": 2
+    },
+    {
+      "entity_id": "COL",
+      "entity_name": "Colombia",
+      "year": 2023,
+      "concept": "labor_force_engagement",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "moderate",
+      "success": false,
+      "primary_value": 63.736,
+      "secondary_value": 9.591,
+      "series_available": 5,
+      "invalid_proxy_series_count": 3
+    },
+    {
+      "entity_id": "DEU",
+      "entity_name": "Germany",
+      "year": 2023,
+      "concept": "labor_force_engagement",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "moderate",
+      "success": false,
+      "primary_value": 61.05,
+      "secondary_value": 3.071,
+      "series_available": 5,
+      "invalid_proxy_series_count": 3
+    }
+  ],
+  "primary_series": "SL.TLF.CACT.ZS",
+  "concept_name": "labor_force_engagement"
+}

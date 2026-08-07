@@ -1,0 +1,279 @@
+{
+  "dataset": "trade",
+  "title": "Trade Structure",
+  "source": "World Bank WDI (trade indicators)",
+  "entities_latest": 29,
+  "evaluable": 28,
+  "fidelity_counts": {
+    "high": 7,
+    "moderate": 11,
+    "low": 10,
+    "outside": 1
+  },
+  "proxy_trap_entities": 28,
+  "grounding": {
+    "context_tokens_est": {
+      "ungrounded": 640,
+      "grounded": 200,
+      "reduction_pct": 68.8
+    },
+    "series_touches": {
+      "ungrounded": 171,
+      "grounded": 28,
+      "reduction_pct": 83.6
+    },
+    "invalid_proxy_uses": {
+      "ungrounded": 86,
+      "grounded": 0
+    },
+    "accuracy_vs_concept": {
+      "ungrounded_match_pct": 25.0,
+      "grounded_match_pct": 100.0,
+      "disagreements": 21
+    },
+    "thesis_proven": {
+      "token_context_reduction": true,
+      "series_touch_reduction": true,
+      "zero_invalid_proxies_when_grounded": true,
+      "ungrounded_disagrees_or_proxy_risk": true
+    }
+  },
+  "trap_samples": [
+    {
+      "entity": "Argentina",
+      "key": "ARG",
+      "year": 2023,
+      "primary_value": 12.8223120961047,
+      "fidelity": "low",
+      "forbidden_present": [
+        "NE.IMP.GNFS.ZS",
+        "TM.VAL.MRCH.XD.WD",
+        "BX.KLT.DINV.WD.GD.ZS"
+      ]
+    },
+    {
+      "entity": "Australia",
+      "key": "AUS",
+      "year": 2023,
+      "primary_value": 26.701068252275,
+      "fidelity": "moderate",
+      "forbidden_present": [
+        "NE.IMP.GNFS.ZS",
+        "TM.VAL.MRCH.XD.WD",
+        "BX.KLT.DINV.WD.GD.ZS"
+      ]
+    },
+    {
+      "entity": "Brazil",
+      "key": "BRA",
+      "year": 2023,
+      "primary_value": 17.9693243032741,
+      "fidelity": "low",
+      "forbidden_present": [
+        "NE.IMP.GNFS.ZS",
+        "TM.VAL.MRCH.XD.WD",
+        "BX.KLT.DINV.WD.GD.ZS"
+      ]
+    },
+    {
+      "entity": "Canada",
+      "key": "CAN",
+      "year": 2023,
+      "primary_value": 33.3416520498948,
+      "fidelity": "moderate",
+      "forbidden_present": [
+        "NE.IMP.GNFS.ZS",
+        "TM.VAL.MRCH.XD.WD",
+        "BX.KLT.DINV.WD.GD.ZS"
+      ]
+    },
+    {
+      "entity": "Chile",
+      "key": "CHL",
+      "year": 2023,
+      "primary_value": 30.7750617433637,
+      "fidelity": "moderate",
+      "forbidden_present": [
+        "NE.IMP.GNFS.ZS",
+        "TM.VAL.MRCH.XD.WD",
+        "BX.KLT.DINV.WD.GD.ZS"
+      ]
+    },
+    {
+      "entity": "China",
+      "key": "CHN",
+      "year": 2023,
+      "primary_value": 19.4023091648376,
+      "fidelity": "low",
+      "forbidden_present": [
+        "NE.IMP.GNFS.ZS",
+        "TM.VAL.MRCH.XD.WD",
+        "BX.KLT.DINV.WD.GD.ZS"
+      ]
+    },
+    {
+      "entity": "Colombia",
+      "key": "COL",
+      "year": 2023,
+      "primary_value": 17.8077746975806,
+      "fidelity": "low",
+      "forbidden_present": [
+        "NE.IMP.GNFS.ZS",
+        "TM.VAL.MRCH.XD.WD",
+        "BX.KLT.DINV.WD.GD.ZS"
+      ]
+    },
+    {
+      "entity": "Germany",
+      "key": "DEU",
+      "year": 2023,
+      "primary_value": 42.9672624196847,
+      "fidelity": "high",
+      "forbidden_present": [
+        "NE.IMP.GNFS.ZS",
+        "TM.VAL.MRCH.XD.WD",
+        "BX.KLT.DINV.WD.GD.ZS"
+      ]
+    },
+    {
+      "entity": "Egypt, Arab Rep.",
+      "key": "EGY",
+      "year": 2023,
+      "primary_value": 19.1060913405676,
+      "fidelity": "low",
+      "forbidden_present": [
+        "NE.IMP.GNFS.ZS",
+        "TM.VAL.MRCH.XD.WD",
+        "BX.KLT.DINV.WD.GD.ZS"
+      ]
+    },
+    {
+      "entity": "Spain",
+      "key": "ESP",
+      "year": 2023,
+      "primary_value": 37.8166476493913,
+      "fidelity": "moderate",
+      "forbidden_present": [
+        "NE.IMP.GNFS.ZS",
+        "TM.VAL.MRCH.XD.WD",
+        "BX.KLT.DINV.WD.GD.ZS"
+      ]
+    }
+  ],
+  "case_samples": [
+    {
+      "entity_id": "ARG",
+      "entity_name": "Argentina",
+      "year": 2023,
+      "concept": "export_orientation",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "low",
+      "success": false,
+      "primary_value": 12.8223120961047,
+      "secondary_value": 13.8546391521167,
+      "series_available": 6,
+      "invalid_proxy_series_count": 3
+    },
+    {
+      "entity_id": "AUS",
+      "entity_name": "Australia",
+      "year": 2023,
+      "concept": "export_orientation",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "moderate",
+      "success": false,
+      "primary_value": 26.701068252275,
+      "secondary_value": 22.3432710661529,
+      "series_available": 6,
+      "invalid_proxy_series_count": 3
+    },
+    {
+      "entity_id": "BRA",
+      "entity_name": "Brazil",
+      "year": 2023,
+      "concept": "export_orientation",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "low",
+      "success": false,
+      "primary_value": 17.9693243032741,
+      "secondary_value": 15.6969055268697,
+      "series_available": 6,
+      "invalid_proxy_series_count": 3
+    },
+    {
+      "entity_id": "CAN",
+      "entity_name": "Canada",
+      "year": 2023,
+      "concept": "export_orientation",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "moderate",
+      "success": false,
+      "primary_value": 33.3416520498948,
+      "secondary_value": 33.2328904516085,
+      "series_available": 6,
+      "invalid_proxy_series_count": 3
+    },
+    {
+      "entity_id": "CHL",
+      "entity_name": "Chile",
+      "year": 2023,
+      "concept": "export_orientation",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "moderate",
+      "success": false,
+      "primary_value": 30.7750617433637,
+      "secondary_value": 29.901582730252,
+      "series_available": 6,
+      "invalid_proxy_series_count": 3
+    },
+    {
+      "entity_id": "CHN",
+      "entity_name": "China",
+      "year": 2023,
+      "concept": "export_orientation",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "low",
+      "success": false,
+      "primary_value": 19.4023091648376,
+      "secondary_value": 17.3368405290018,
+      "series_available": 6,
+      "invalid_proxy_series_count": 3
+    },
+    {
+      "entity_id": "COL",
+      "entity_name": "Colombia",
+      "year": 2023,
+      "concept": "export_orientation",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "low",
+      "success": false,
+      "primary_value": 17.8077746975806,
+      "secondary_value": 22.3255418346774,
+      "series_available": 6,
+      "invalid_proxy_series_count": 3
+    },
+    {
+      "entity_id": "DEU",
+      "entity_name": "Germany",
+      "year": 2023,
+      "concept": "export_orientation",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "high",
+      "success": true,
+      "primary_value": 42.9672624196847,
+      "secondary_value": 38.9952859590786,
+      "series_available": 6,
+      "invalid_proxy_series_count": 3
+    }
+  ],
+  "primary_series": "NE.EXP.GNFS.ZS",
+  "concept_name": "export_orientation"
+}

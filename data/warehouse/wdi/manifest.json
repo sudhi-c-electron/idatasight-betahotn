@@ -1,0 +1,178 @@
+{
+  "pulled_at": "2026-08-07T07:12:47.857976+00:00",
+  "api_base": "https://api.worldbank.org/v2",
+  "date_range": "2010:2023",
+  "countries_requested_iso2": [
+    "US",
+    "CA",
+    "MX",
+    "BR",
+    "AR",
+    "GB",
+    "DE",
+    "FR",
+    "IT",
+    "ES",
+    "NL",
+    "SE",
+    "PL",
+    "CN",
+    "JP",
+    "KR",
+    "IN",
+    "ID",
+    "AU",
+    "ZA",
+    "NG",
+    "EG",
+    "TR",
+    "SA",
+    "RU",
+    "SG",
+    "VN",
+    "CL",
+    "CO"
+  ],
+  "indicators_requested": [
+    "SE.SEC.ENRR",
+    "SE.SEC.CMPT.LO.ZS",
+    "SE.PRM.CMPT.ZS",
+    "SE.XPD.TOTL.GD.ZS",
+    "SE.XPD.TOTL.GB.ZS",
+    "NY.GDP.PCAP.CD",
+    "NE.TRD.GNFS.ZS",
+    "SP.POP.TOTL",
+    "SE.TER.ENRR",
+    "SE.SEC.CUAT.UP.ZS",
+    "GC.XPN.TOTL.GD.ZS",
+    "BX.KLT.DINV.WD.GD.ZS"
+  ],
+  "failures": [],
+  "validation": {
+    "observation_rows": 4872,
+    "non_null_rows": 4030,
+    "null_rows": 842,
+    "indicator_count": 12,
+    "country_meta_count": 29,
+    "countries_with_data": 29,
+    "year_min": 2010,
+    "year_max": 2023,
+    "by_indicator": {
+      "BX.KLT.DINV.WD.GD.ZS": {
+        "total": 406,
+        "non_null": 406,
+        "missing_pct": 0.0
+      },
+      "GC.XPN.TOTL.GD.ZS": {
+        "total": 406,
+        "non_null": 329,
+        "missing_pct": 19.0
+      },
+      "NE.TRD.GNFS.ZS": {
+        "total": 406,
+        "non_null": 392,
+        "missing_pct": 3.4
+      },
+      "NY.GDP.PCAP.CD": {
+        "total": 406,
+        "non_null": 406,
+        "missing_pct": 0.0
+      },
+      "SE.PRM.CMPT.ZS": {
+        "total": 406,
+        "non_null": 236,
+        "missing_pct": 41.9
+      },
+      "SE.SEC.CMPT.LO.ZS": {
+        "total": 406,
+        "non_null": 238,
+        "missing_pct": 41.4
+      },
+      "SE.SEC.CUAT.UP.ZS": {
+        "total": 406,
+        "non_null": 327,
+        "missing_pct": 19.5
+      },
+      "SE.SEC.ENRR": {
+        "total": 406,
+        "non_null": 353,
+        "missing_pct": 13.1
+      },
+      "SE.TER.ENRR": {
+        "total": 406,
+        "non_null": 362,
+        "missing_pct": 10.8
+      },
+      "SE.XPD.TOTL.GB.ZS": {
+        "total": 406,
+        "non_null": 268,
+        "missing_pct": 34.0
+      },
+      "SE.XPD.TOTL.GD.ZS": {
+        "total": 406,
+        "non_null": 307,
+        "missing_pct": 24.4
+      },
+      "SP.POP.TOTL": {
+        "total": 406,
+        "non_null": 406,
+        "missing_pct": 0.0
+      }
+    },
+    "health_code_leaks": []
+  },
+  "sample_non_null": [
+    {
+      "country": "Argentina",
+      "iso2": "AR",
+      "iso3": "ARG",
+      "year": 2023,
+      "indicator_code": "SE.SEC.ENRR",
+      "value": 105.574584297051
+    },
+    {
+      "country": "Argentina",
+      "iso2": "AR",
+      "iso3": "ARG",
+      "year": 2022,
+      "indicator_code": "SE.SEC.ENRR",
+      "value": 114.14811706543
+    },
+    {
+      "country": "Argentina",
+      "iso2": "AR",
+      "iso3": "ARG",
+      "year": 2021,
+      "indicator_code": "SE.SEC.ENRR",
+      "value": 115.735778808594
+    },
+    {
+      "country": "Argentina",
+      "iso2": "AR",
+      "iso3": "ARG",
+      "year": 2020,
+      "indicator_code": "SE.SEC.ENRR",
+      "value": 112.376731872559
+    },
+    {
+      "country": "Argentina",
+      "iso2": "AR",
+      "iso3": "ARG",
+      "year": 2019,
+      "indicator_code": "SE.SEC.ENRR",
+      "value": 110.460151672363
+    }
+  ],
+  "paths": {
+    "observations": "/Users/cworks/PLATFORM/APPLICATIONS/BetaThon/data/wdi/wdi_observations.csv",
+    "indicators": "/Users/cworks/PLATFORM/APPLICATIONS/BetaThon/data/wdi/wdi_indicators.csv",
+    "countries": "/Users/cworks/PLATFORM/APPLICATIONS/BetaThon/data/wdi/wdi_countries.csv"
+  },
+  "success_criteria": {
+    "files_exist": true,
+    "non_null_ge_1000": true,
+    "indicators_ge_8": true,
+    "countries_ge_15": true,
+    "no_health_leaks": true
+  }
+}

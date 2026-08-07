@@ -1,0 +1,48 @@
+{
+  "namespace": "datasets.inequality",
+  "name": "income_equality",
+  "display_name": "Income Equality",
+  "type": "concept",
+  "domain": "economics_inequality",
+  "version": 1,
+  "status": "formal",
+  "origin": "analytic",
+  "world": "actual",
+  "genetic_identity": "Income equality is low dispersion of income across households as summarized by the Gini index \u2014 not mean income, urbanization, or poverty headcount alone.",
+  "boundaries": {
+    "includes": [
+      "Primary series SI.POV.GINI",
+      "Country/entity-year non-null observations"
+    ],
+    "excludes": [
+      "High GDP/GNI per capita as equality",
+      "Urbanization as equality",
+      "Poverty headcount alone as Gini equality"
+    ]
+  },
+  "series_bindings": {
+    "primary": "SI.POV.GINI",
+    "secondary": "SI.DST.05TH.20",
+    "contrast_forbidden_as_proxy": [
+      "NY.GNP.PCAP.CD",
+      "SP.URB.TOTL.IN.ZS",
+      "SI.POV.DDAY"
+    ]
+  },
+  "thresholds": {
+    "high": 35.0,
+    "moderate": 42.0
+  },
+  "rules": [
+    {
+      "name": "no_forbidden_proxy",
+      "statement": "Using forbidden proxy series for success leaves this concept."
+    },
+    {
+      "name": "null_outside_envelope",
+      "statement": "Missing primary observation is outside envelope, not low fidelity."
+    }
+  ],
+  "dataset": "inequality",
+  "source": "World Bank WDI (inequality/poverty)"
+}

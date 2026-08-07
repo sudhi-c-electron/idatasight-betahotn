@@ -1,0 +1,48 @@
+{
+  "namespace": "datasets.trade",
+  "name": "export_orientation",
+  "display_name": "Export Orientation",
+  "type": "concept",
+  "domain": "trade",
+  "version": 1,
+  "status": "formal",
+  "origin": "analytic",
+  "world": "actual",
+  "genetic_identity": "Export orientation is the scale of exports of goods and services relative to GDP \u2014 not import dependence, FDI, or development success.",
+  "boundaries": {
+    "includes": [
+      "Primary series NE.EXP.GNFS.ZS",
+      "Country/entity-year non-null observations"
+    ],
+    "excludes": [
+      "Imports as export orientation",
+      "FDI as openness success",
+      "Merchandise index alone without GDP share"
+    ]
+  },
+  "series_bindings": {
+    "primary": "NE.EXP.GNFS.ZS",
+    "secondary": "NE.IMP.GNFS.ZS",
+    "contrast_forbidden_as_proxy": [
+      "BX.KLT.DINV.WD.GD.ZS",
+      "TM.VAL.MRCH.XD.WD",
+      "NE.IMP.GNFS.ZS"
+    ]
+  },
+  "thresholds": {
+    "high": 40.0,
+    "moderate": 25.0
+  },
+  "rules": [
+    {
+      "name": "no_forbidden_proxy",
+      "statement": "Using forbidden proxy series for success leaves this concept."
+    },
+    {
+      "name": "null_outside_envelope",
+      "statement": "Missing primary observation is outside envelope, not low fidelity."
+    }
+  ],
+  "dataset": "trade",
+  "source": "World Bank WDI (trade indicators)"
+}

@@ -1,0 +1,70 @@
+{
+  "namespace": "economics.trade",
+  "name": "trade_openness",
+  "display_name": "Trade Openness",
+  "type": "concept",
+  "domain": "economics",
+  "version": 1,
+  "status": "formal",
+  "origin": "analytic",
+  "world": "actual",
+  "genetic_identity": "Trade openness is the scale of cross-border trade in goods and services relative to the size of the economy — not export sophistication, partner concentration, or development success.",
+  "description": "Optional related Concept for multi-domain grounding demos. Primary series NE.TRD.GNFS.ZS (trade % of GDP).",
+  "atoms": [
+    {
+      "name": "is_trade_to_gdp_ratio",
+      "statement": "Trade openness is measured as trade (exports plus imports of goods and services) as a percentage of GDP."
+    },
+    {
+      "name": "binds_to_wdi_trade_share",
+      "statement": "Within WDI, the primary series is NE.TRD.GNFS.ZS."
+    },
+    {
+      "name": "is_not_development_outcome",
+      "statement": "High trade openness is not by itself educational or human-capital success."
+    },
+    {
+      "name": "is_country_year_evaluable",
+      "statement": "Openness is evaluable when NE.TRD.GNFS.ZS is non-null for the country-year."
+    }
+  ],
+  "rules": [
+    {
+      "name": "must_not_proxy_education_success",
+      "statement": "Using trade % GDP to rank educational success leaves this concept and invades education concepts without warrant."
+    },
+    {
+      "name": "must_not_claim_diversification",
+      "statement": "Trade/GDP alone does not establish partner diversification or strategic resilience (different concepts; need Comtrade-style detail)."
+    }
+  ],
+  "boundaries": {
+    "includes": ["Trade % GDP (NE.TRD.GNFS.ZS)", "Country-year non-null trade shares"],
+    "excludes": [
+      "Bilateral partner concentration",
+      "Export product sophistication",
+      "FDI alone as openness",
+      "Education outcomes"
+    ]
+  },
+  "fidelity_envelope": {
+    "holds_within": ["National WDI trade/GDP 2010–2023"],
+    "breaks_at": ["Partner-level dependency", "Value-chain / GVC positions"]
+  },
+  "relations": [
+    {"type": "composes_with", "target": "education.outcomes.secondary_completion", "note": "Macro context only; not a substitute."}
+  ],
+  "series_bindings": {
+    "primary": "NE.TRD.GNFS.ZS",
+    "contrast_forbidden_as_proxy": ["SE.SEC.CMPT.LO.ZS", "SE.XPD.TOTL.GD.ZS", "BX.KLT.DINV.WD.GD.ZS"],
+    "supporting_context_only": ["NY.GDP.PCAP.CD", "SP.POP.TOTL", "BX.KLT.DINV.WD.GD.ZS"]
+  },
+  "thresholds": {
+    "high_openness_min": 80.0,
+    "moderate_openness_min": 50.0
+  },
+  "glossary": {
+    "trade_openness": "Trade as a percentage of GDP."
+  },
+  "exemplars": []
+}

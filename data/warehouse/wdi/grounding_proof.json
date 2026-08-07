@@ -1,0 +1,129 @@
+{
+  "countries": 29,
+  "evaluable_under_completion_concept": 24,
+  "context_tokens_est": {
+    "ungrounded_system_package": 1399,
+    "grounded_system_package": 585,
+    "reduction_pct": 58.2
+  },
+  "series_touches_total": {
+    "ungrounded": 86,
+    "grounded": 29,
+    "reduction_pct": 66.3
+  },
+  "invalid_proxy_uses_total": {
+    "ungrounded": 86,
+    "grounded": 0
+  },
+  "accuracy_vs_concept_truth_evaluable": {
+    "ungrounded_match_pct": 70.8,
+    "grounded_match_pct": 100.0,
+    "disagreements": 7
+  },
+  "disagreement_samples": [
+    {
+      "country": "China",
+      "iso3": "CHN",
+      "ungrounded_success": false,
+      "ungrounded_score": 50.22,
+      "ungrounded_series": [
+        "SE.SEC.ENRR",
+        "SE.XPD.TOTL.GD.ZS",
+        "NY.GDP.PCAP.CD"
+      ],
+      "grounded_success": true,
+      "grounded_fidelity": "high",
+      "completion_value": 103.606581205367
+    },
+    {
+      "country": "Germany",
+      "iso3": "DEU",
+      "ungrounded_success": true,
+      "ungrounded_score": 73.72,
+      "ungrounded_series": [
+        "SE.SEC.ENRR",
+        "SE.XPD.TOTL.GD.ZS",
+        "NY.GDP.PCAP.CD"
+      ],
+      "grounded_success": false,
+      "grounded_fidelity": "low",
+      "completion_value": 64.1170196533203
+    },
+    {
+      "country": "Colombia",
+      "iso3": "COL",
+      "ungrounded_success": true,
+      "ungrounded_score": 56.22,
+      "ungrounded_series": [
+        "SE.SEC.ENRR",
+        "SE.XPD.TOTL.GD.ZS",
+        "NY.GDP.PCAP.CD"
+      ],
+      "grounded_success": false,
+      "grounded_fidelity": "moderate",
+      "completion_value": 83.0199279785156
+    },
+    {
+      "country": "Indonesia",
+      "iso3": "IDN",
+      "ungrounded_success": false,
+      "ungrounded_score": 38.61,
+      "ungrounded_series": [
+        "SE.SEC.ENRR",
+        "SE.XPD.TOTL.GD.ZS",
+        "NY.GDP.PCAP.CD"
+      ],
+      "grounded_success": true,
+      "grounded_fidelity": "high",
+      "completion_value": 97.6515105231315
+    },
+    {
+      "country": "Russian Federation",
+      "iso3": "RUS",
+      "ungrounded_success": false,
+      "ungrounded_score": 51.69,
+      "ungrounded_series": [
+        "SE.SEC.ENRR",
+        "SE.XPD.TOTL.GD.ZS",
+        "NY.GDP.PCAP.CD"
+      ],
+      "grounded_success": true,
+      "grounded_fidelity": "high",
+      "completion_value": 97.0205005816817
+    },
+    {
+      "country": "Viet Nam",
+      "iso3": "VNM",
+      "ungrounded_success": false,
+      "ungrounded_score": 43.59,
+      "ungrounded_series": [
+        "SE.SEC.ENRR",
+        "SE.XPD.TOTL.GD.ZS",
+        "NY.GDP.PCAP.CD"
+      ],
+      "grounded_success": true,
+      "grounded_fidelity": "high",
+      "completion_value": 92.981800847596
+    },
+    {
+      "country": "South Africa",
+      "iso3": "ZAF",
+      "ungrounded_success": true,
+      "ungrounded_score": 59.94,
+      "ungrounded_series": [
+        "SE.SEC.ENRR",
+        "SE.XPD.TOTL.GD.ZS",
+        "NY.GDP.PCAP.CD"
+      ],
+      "grounded_success": false,
+      "grounded_fidelity": "moderate",
+      "completion_value": 88.3110245554927
+    }
+  ],
+  "thesis_proven": {
+    "token_context_reduction": true,
+    "series_touch_reduction": true,
+    "zero_invalid_proxies_when_grounded": true,
+    "ungrounded_disagrees_with_concept": true
+  }
+}

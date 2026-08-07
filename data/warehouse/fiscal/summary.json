@@ -1,0 +1,265 @@
+{
+  "dataset": "fiscal",
+  "title": "Public Finance & Government Size",
+  "source": "World Bank WDI (fiscal indicators)",
+  "entities_latest": 29,
+  "evaluable": 18,
+  "fidelity_counts": {
+    "high": 5,
+    "moderate": 6,
+    "low": 7,
+    "outside": 11
+  },
+  "proxy_trap_entities": 18,
+  "grounding": {
+    "context_tokens_est": {
+      "ungrounded": 640,
+      "grounded": 200,
+      "reduction_pct": 68.8
+    },
+    "series_touches": {
+      "ungrounded": 123,
+      "grounded": 18,
+      "reduction_pct": 85.4
+    },
+    "invalid_proxy_uses": {
+      "ungrounded": 41,
+      "grounded": 0
+    },
+    "accuracy_vs_concept": {
+      "ungrounded_match_pct": 27.8,
+      "grounded_match_pct": 100.0,
+      "disagreements": 13
+    },
+    "thesis_proven": {
+      "token_context_reduction": true,
+      "series_touch_reduction": true,
+      "zero_invalid_proxies_when_grounded": true,
+      "ungrounded_disagrees_or_proxy_risk": true
+    }
+  },
+  "trap_samples": [
+    {
+      "entity": "Argentina",
+      "key": "ARG",
+      "year": 2023,
+      "primary_value": 21.00878925888,
+      "fidelity": "low",
+      "forbidden_present": [
+        "NY.GDP.PCAP.CD"
+      ]
+    },
+    {
+      "entity": "Brazil",
+      "key": "BRA",
+      "year": 2023,
+      "primary_value": 32.4311004876294,
+      "fidelity": "moderate",
+      "forbidden_present": [
+        "GC.DOD.TOTL.GD.ZS",
+        "NY.GDP.PCAP.CD"
+      ]
+    },
+    {
+      "entity": "Canada",
+      "key": "CAN",
+      "year": 2023,
+      "primary_value": 19.0564147253424,
+      "fidelity": "low",
+      "forbidden_present": [
+        "GC.DOD.TOTL.GD.ZS",
+        "NY.GDP.PCAP.CD"
+      ]
+    },
+    {
+      "entity": "Chile",
+      "key": "CHL",
+      "year": 2023,
+      "primary_value": 24.5587474981752,
+      "fidelity": "low",
+      "forbidden_present": [
+        "NY.GDP.PCAP.CD"
+      ]
+    },
+    {
+      "entity": "Colombia",
+      "key": "COL",
+      "year": 2023,
+      "primary_value": 33.2804845516298,
+      "fidelity": "moderate",
+      "forbidden_present": [
+        "GC.DOD.TOTL.GD.ZS",
+        "NY.GDP.PCAP.CD"
+      ]
+    },
+    {
+      "entity": "Spain",
+      "key": "ESP",
+      "year": 2023,
+      "primary_value": 34.0441499010857,
+      "fidelity": "moderate",
+      "forbidden_present": [
+        "GC.DOD.TOTL.GD.ZS",
+        "NY.GDP.PCAP.CD"
+      ]
+    },
+    {
+      "entity": "France",
+      "key": "FRA",
+      "year": 2023,
+      "primary_value": 47.2580360132692,
+      "fidelity": "high",
+      "forbidden_present": [
+        "NY.GDP.PCAP.CD"
+      ]
+    },
+    {
+      "entity": "United Kingdom",
+      "key": "GBR",
+      "year": 2023,
+      "primary_value": 41.2292290721047,
+      "fidelity": "high",
+      "forbidden_present": [
+        "GC.DOD.TOTL.GD.ZS",
+        "NY.GDP.PCAP.CD"
+      ]
+    },
+    {
+      "entity": "Italy",
+      "key": "ITA",
+      "year": 2023,
+      "primary_value": 47.2773607528737,
+      "fidelity": "high",
+      "forbidden_present": [
+        "NY.GDP.PCAP.CD"
+      ]
+    },
+    {
+      "entity": "Korea, Rep.",
+      "key": "KOR",
+      "year": 2023,
+      "primary_value": 28.3225119832631,
+      "fidelity": "moderate",
+      "forbidden_present": [
+        "GC.DOD.TOTL.GD.ZS",
+        "NY.GDP.PCAP.CD"
+      ]
+    }
+  ],
+  "case_samples": [
+    {
+      "entity_id": "ARG",
+      "entity_name": "Argentina",
+      "year": 2023,
+      "concept": "public_fiscal_effort",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "low",
+      "success": false,
+      "primary_value": 21.00878925888,
+      "secondary_value": 9.92889407757488,
+      "series_available": 5,
+      "invalid_proxy_series_count": 1
+    },
+    {
+      "entity_id": "BRA",
+      "entity_name": "Brazil",
+      "year": 2023,
+      "concept": "public_fiscal_effort",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "moderate",
+      "success": false,
+      "primary_value": 32.4311004876294,
+      "secondary_value": 14.041862416944,
+      "series_available": 6,
+      "invalid_proxy_series_count": 2
+    },
+    {
+      "entity_id": "CAN",
+      "entity_name": "Canada",
+      "year": 2023,
+      "concept": "public_fiscal_effort",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "low",
+      "success": false,
+      "primary_value": 19.0564147253424,
+      "secondary_value": 13.7377870842483,
+      "series_available": 6,
+      "invalid_proxy_series_count": 2
+    },
+    {
+      "entity_id": "CHL",
+      "entity_name": "Chile",
+      "year": 2023,
+      "concept": "public_fiscal_effort",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "low",
+      "success": false,
+      "primary_value": 24.5587474981752,
+      "secondary_value": 17.7043787454348,
+      "series_available": 5,
+      "invalid_proxy_series_count": 1
+    },
+    {
+      "entity_id": "COL",
+      "entity_name": "Colombia",
+      "year": 2023,
+      "concept": "public_fiscal_effort",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "moderate",
+      "success": false,
+      "primary_value": 33.2804845516298,
+      "secondary_value": 17.5330441918086,
+      "series_available": 6,
+      "invalid_proxy_series_count": 2
+    },
+    {
+      "entity_id": "ESP",
+      "entity_name": "Spain",
+      "year": 2023,
+      "concept": "public_fiscal_effort",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "moderate",
+      "success": false,
+      "primary_value": 34.0441499010857,
+      "secondary_value": 15.0007244146429,
+      "series_available": 6,
+      "invalid_proxy_series_count": 2
+    },
+    {
+      "entity_id": "FRA",
+      "entity_name": "France",
+      "year": 2023,
+      "concept": "public_fiscal_effort",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "high",
+      "success": true,
+      "primary_value": 47.2580360132692,
+      "secondary_value": 23.1762031443727,
+      "series_available": 5,
+      "invalid_proxy_series_count": 1
+    },
+    {
+      "entity_id": "GBR",
+      "entity_name": "United Kingdom",
+      "year": 2023,
+      "concept": "public_fiscal_effort",
+      "evaluable": true,
+      "membership": "in_envelope",
+      "fidelity": "high",
+      "success": true,
+      "primary_value": 41.2292290721047,
+      "secondary_value": 26.8736892132882,
+      "series_available": 6,
+      "invalid_proxy_series_count": 2
+    }
+  ],
+  "primary_series": "GC.XPN.TOTL.GD.ZS",
+  "concept_name": "public_fiscal_effort"
+}

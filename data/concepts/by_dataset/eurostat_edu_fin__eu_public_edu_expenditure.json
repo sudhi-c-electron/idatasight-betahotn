@@ -1,0 +1,43 @@
+{
+  "namespace": "datasets.eurostat_edu_fin",
+  "name": "eu_public_edu_expenditure",
+  "display_name": "EU Public Education Expenditure",
+  "type": "concept",
+  "domain": "education_finance_eu",
+  "version": 1,
+  "status": "formal",
+  "origin": "analytic",
+  "world": "actual",
+  "genetic_identity": "EU public education expenditure is government spending on education as a share of GDP, as reported by Eurostat \u2014 not student outcomes or private spend.",
+  "boundaries": {
+    "includes": [
+      "Primary series EDU_EXP_PC_GDP_ED3_4",
+      "Country/entity-year non-null observations"
+    ],
+    "excludes": [
+      "Learning outcomes as expenditure",
+      "Non-EU aggregates without Eurostat codes"
+    ]
+  },
+  "series_bindings": {
+    "primary": "EDU_EXP_PC_GDP_ED3_4",
+    "secondary": null,
+    "contrast_forbidden_as_proxy": []
+  },
+  "thresholds": {
+    "high": 5.5,
+    "moderate": 4.5
+  },
+  "rules": [
+    {
+      "name": "no_forbidden_proxy",
+      "statement": "Using forbidden proxy series for success leaves this concept."
+    },
+    {
+      "name": "null_outside_envelope",
+      "statement": "Missing primary observation is outside envelope, not low fidelity."
+    }
+  ],
+  "dataset": "eurostat_edu_fin",
+  "source": "Eurostat educ_uoe_fine06"
+}
