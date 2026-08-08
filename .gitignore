@@ -1,3 +1,6 @@
+assets/external/
+.web
+.states
 # Python
 __pycache__/
 *.py[cod]
@@ -12,6 +15,13 @@ __pycache__/
 # root. Beliefs live outside the repo in EVEROS_ROOT (~/.everos by default);
 # fresh clones re-seed from data/concepts/ and the dry-run proof.
 data/store/
+
+# Deploy secrets and per-deployment state — never tracked. The initial commit
+# swept a key pair in before these patterns existed (see the removal commit);
+# any future deploy generates fresh ones and they stay out of the repo.
+deploy/*.pem
+deploy/.state/
+deploy/*.tgz
 
 # Local debris
 .DS_Store

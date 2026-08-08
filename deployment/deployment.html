@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>iDataSight — Deployment Record</title>
+<style>
+  :root{
+    --ground:#F2F0EC; --surface:#FFFFFF; --surface-2:#E9E6E0; --sunk:#EDEAE4;
+    --ink:#191512; --ink-2:#5C554D; --ink-3:#8B8379;
+    --rule:#D7D2C9; --rule-2:#C2BCB1;
+    --accent:#EC3013; --accent-soft:#FAE2DC; --accent-ink:#B02310;
+    --slate:#3C4E5B; --slate-soft:#E2E7EA;
+    --go:#0E6B57; --go-soft:#DEEDE7;
+    --warn:#9A6208; --warn-soft:#F6EBD6;
+    --crit:#BB2417; --crit-soft:#F9E1DD;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#141210; --surface:#1C1917; --surface-2:#252220; --sunk:#100E0D;
+      --ink:#EDE8E1; --ink-2:#A9A29A; --ink-3:#786F66;
+      --rule:#332E2A; --rule-2:#443D38;
+      --accent:#FF5638; --accent-soft:#3A1C15; --accent-ink:#FF7A62;
+      --slate:#93A9B7; --slate-soft:#1E272C;
+      --go:#45C4A2; --go-soft:#12271F;
+      --warn:#DCA845; --warn-soft:#2B2113;
+      --crit:#FF6E59; --crit-soft:#33150F;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#141210; --surface:#1C1917; --surface-2:#252220; --sunk:#100E0D;
+    --ink:#EDE8E1; --ink-2:#A9A29A; --ink-3:#786F66;
+    --rule:#332E2A; --rule-2:#443D38;
+    --accent:#FF5638; --accent-soft:#3A1C15; --accent-ink:#FF7A62;
+    --slate:#93A9B7; --slate-soft:#1E272C;
+    --go:#45C4A2; --go-soft:#12271F;
+    --warn:#DCA845; --warn-soft:#2B2113;
+    --crit:#FF6E59; --crit-soft:#33150F;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:15.5px; line-height:1.62; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px; margin:0 auto; padding:0 24px 96px}
+  .display{font-family:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight:800; letter-spacing:-.025em; text-wrap:balance; line-height:1.08}
+  .eyebrow{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--ink-3); font-weight:600}
+
+  header.mast{border-bottom:2px solid var(--ink); padding:44px 0 22px; margin-bottom:34px}
+  .mast h1{font-size:clamp(32px,5.2vw,54px); margin:12px 0 0}
+  .mast h1 em{font-style:normal; color:var(--accent)}
+  .mast .lede{font-size:17.5px; color:var(--ink-2); max-width:62ch; margin:16px 0 0}
+  .verdict{display:inline-block; margin-top:20px; padding:7px 14px;
+    background:var(--go-soft); color:var(--go); border:1px solid var(--go);
+    font-family:ui-monospace,Menlo,monospace; font-size:11.5px;
+    letter-spacing:.1em; text-transform:uppercase; font-weight:700}
+
+  nav.toc{border:1px solid var(--rule); background:var(--surface); padding:18px 20px; margin-bottom:44px}
+  nav.toc .eyebrow{margin-bottom:10px; display:block}
+  nav.toc ol{margin:0; padding:0; list-style:none; columns:2; column-gap:32px}
+  nav.toc li{margin-bottom:4px; font-size:14px; break-inside:avoid}
+  nav.toc a{color:var(--ink-2); text-decoration:none}
+  nav.toc a:hover{color:var(--accent); text-decoration:underline}
+  nav.toc .n{font-family:ui-monospace,Menlo,monospace; font-size:11.5px;
+    color:var(--accent); margin-right:7px}
+
+  section{margin:52px 0 0; scroll-margin-top:20px}
+  h2.sec{font-family:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight:800; letter-spacing:-.02em; font-size:25px; margin:0 0 8px;
+    display:flex; align-items:baseline; gap:12px}
+  h2.sec .num{font-family:ui-monospace,Menlo,monospace; font-size:13px;
+    font-weight:600; color:var(--accent); letter-spacing:0}
+  .sec-note{color:var(--ink-2); margin:0 0 22px; max-width:68ch}
+  h3{font-family:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight:700; font-size:16.5px; letter-spacing:-.01em; margin:0 0 8px}
+
+  .tablewrap{overflow-x:auto; border:1px solid var(--rule); background:var(--surface); margin-bottom:18px}
+  table{border-collapse:collapse; width:100%; min-width:560px; font-size:14px}
+  th,td{text-align:left; padding:10px 14px; border-bottom:1px solid var(--rule); vertical-align:top}
+  thead th{font-family:ui-monospace,Menlo,monospace; font-size:10.5px;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3);
+    font-weight:600; background:var(--surface-2); border-bottom:1px solid var(--rule-2)}
+  tbody tr:last-child td{border-bottom:0}
+  td.num,th.num{font-variant-numeric:tabular-nums}
+  tr.total td{background:var(--accent-soft); font-weight:700}
+  tr.total td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
+
+  .findings{display:grid; gap:1px; background:var(--rule); border:1px solid var(--rule)}
+  .finding{background:var(--surface); padding:18px 20px; display:grid;
+    grid-template-columns:auto 1fr; gap:16px; align-items:start}
+  .sev{font-family:ui-monospace,Menlo,monospace; font-size:10px; font-weight:700;
+    letter-spacing:.1em; padding:4px 8px; white-space:nowrap; border:1px solid currentColor}
+  .sev.crit{color:var(--crit); background:var(--crit-soft)}
+  .sev.warn{color:var(--warn); background:var(--warn-soft)}
+  .sev.info{color:var(--slate); background:var(--slate-soft)}
+  .sev.open{color:var(--accent); background:var(--accent-soft)}
+  .finding p{margin:6px 0 0; color:var(--ink-2); font-size:14.5px}
+
+  .code{margin:12px 0 14px; background:var(--sunk); border:1px solid var(--rule-2); overflow:hidden}
+  .code-head{padding:6px 12px; border-bottom:1px solid var(--rule-2);
+    background:var(--surface-2); font-family:ui-monospace,Menlo,monospace;
+    font-size:10.5px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--ink-3); font-weight:600}
+  pre{margin:0; padding:12px 14px; overflow-x:auto;
+    font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:12.8px; line-height:1.6; color:var(--ink)}
+  pre .c{color:var(--ink-3)}
+  code{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    background:var(--surface-2); padding:1px 5px; font-size:.88em; border:1px solid var(--rule)}
+
+  .call{border:1px solid var(--rule-2); border-left:4px solid var(--slate);
+    background:var(--surface); padding:14px 16px; margin:14px 0}
+  .call.stop{border-left-color:var(--crit); background:var(--crit-soft)}
+  .call.watch{border-left-color:var(--warn); background:var(--warn-soft)}
+  .call.win{border-left-color:var(--go); background:var(--go-soft)}
+  .call .k{font-family:ui-monospace,Menlo,monospace; font-size:10.5px;
+    letter-spacing:.12em; text-transform:uppercase; font-weight:700;
+    display:block; margin-bottom:5px; color:var(--slate)}
+  .call.stop .k{color:var(--crit)} .call.watch .k{color:var(--warn)}
+  .call.win .k{color:var(--go)}
+  .call p{margin:0; font-size:14px; color:var(--ink-2)}
+  .call p + p{margin-top:8px}
+  .call strong{color:var(--ink)}
+
+  ol.timeline{margin:0; padding:0; list-style:none; counter-reset:t}
+  ol.timeline li{counter-increment:t; display:grid; grid-template-columns:34px 1fr;
+    gap:16px; padding-bottom:16px; position:relative}
+  ol.timeline li:not(:last-child)::before{content:""; position:absolute;
+    left:16px; top:26px; bottom:0; width:1px; background:var(--rule-2)}
+  ol.timeline li::after{content:counter(t); position:relative; z-index:1;
+    grid-column:1; font-family:ui-monospace,Menlo,monospace; font-size:12px;
+    font-weight:700; color:var(--accent); background:var(--accent-soft);
+    border:1px solid var(--accent); width:26px; height:26px;
+    display:flex; align-items:center; justify-content:center}
+  ol.timeline .t-body{grid-column:2; font-size:14.5px; color:var(--ink-2)}
+  ol.timeline .t-body strong{color:var(--ink)}
+
+  ol.lessons{margin:0; padding:0; list-style:none; counter-reset:l;
+    display:grid; gap:1px; background:var(--rule); border:1px solid var(--rule)}
+  ol.lessons li{counter-increment:l; background:var(--surface); padding:16px 20px;
+    display:grid; grid-template-columns:auto 1fr; gap:16px}
+  ol.lessons li::before{content:counter(l,decimal-leading-zero);
+    font-family:ui-monospace,Menlo,monospace; font-size:12px; font-weight:700;
+    color:var(--accent)}
+  ol.lessons .l-head{font-weight:650; color:var(--ink); display:block; margin-bottom:3px}
+  ol.lessons p{margin:0; font-size:14px; color:var(--ink-2)}
+
+  ul{padding-left:20px; color:var(--ink-2)} li{margin-bottom:5px}
+  a{color:var(--accent-ink); text-underline-offset:2px}
+  footer{margin-top:64px; padding-top:20px; border-top:2px solid var(--ink);
+    font-size:13.5px; color:var(--ink-3)}
+  @media (max-width:640px){ nav.toc ol{columns:1} .wrap{padding:0 16px 72px} }
+  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <div class="eyebrow">Deployment record · 2026-08-07 · hackathon</div>
+  <h1 class="display">iDataSight went live, then <em>went away</em>.</h1>
+  <p class="lede">A Reflex app on EC2 behind Caddy, deployed and verified in four scripted runs — including the bug that would have shipped a beautiful frozen app, and the GoDaddy failure that was never solved.</p>
+  <div class="verdict">Deployed · verified · torn down · billing zero</div>
+</header>
+
+<nav class="toc">
+  <span class="eyebrow">Contents</span>
+  <ol>
+    <li><a href="#outcome"><span class="n">01</span>Outcome</a></li>
+    <li><a href="#arch"><span class="n">02</span>Architecture as deployed</a></li>
+    <li><a href="#prereq"><span class="n">03</span>Prerequisites &amp; credentials</a></li>
+    <li><a href="#scripts"><span class="n">04</span>The scripts</a></li>
+    <li><a href="#timeline"><span class="n">05</span>What actually happened</a></li>
+    <li><a href="#problems"><span class="n">06</span>Problems encountered</a></li>
+    <li><a href="#verify"><span class="n">07</span>Verification performed</a></li>
+    <li><a href="#lessons"><span class="n">08</span>Lessons learned</a></li>
+    <li><a href="#cost"><span class="n">09</span>Costs</a></li>
+    <li><a href="#teardown"><span class="n">10</span>Teardown &amp; audit</a></li>
+    <li><a href="#redeploy"><span class="n">11</span>Redeploying</a></li>
+    <li><a href="#open"><span class="n">12</span>Outstanding items</a></li>
+    <li><a href="#security"><span class="n">13</span>Security notes</a></li>
+  </ol>
+</nav>
+
+<!-- 01 -->
+<section id="outcome">
+  <h2 class="sec"><span class="num">01</span> Outcome</h2>
+  <div class="tablewrap"><table><tbody>
+    <tr><td><strong>Final URL</strong></td><td><code>https://54.71.45.186.sslip.io</code> — live and verified, since destroyed</td></tr>
+    <tr><td><strong>Intended URL</strong></td><td><code>idatasight.consciouselectron.com</code> — <strong>never achieved</strong>, see §06.6</td></tr>
+    <tr><td>AWS account</td><td><code>789748176365</code> / IAM user <code>celectron_admin</code></td></tr>
+    <tr><td>Region</td><td><code>us-west-2</code> (Oregon)</td></tr>
+    <tr><td>Instance</td><td><code>i-091b8bb7dbb6792a6</code> — t3.medium, Ubuntu 24.04 (<code>ami-0ac74609c6396bed3</code>)</td></tr>
+    <tr><td>Elastic IP</td><td><code>54.71.45.186</code> (<code>eipalloc-0737d0dddd631a8e5</code>)</td></tr>
+    <tr><td>Security group</td><td><code>sg-038699ed9669e725d</code></td></tr>
+    <tr><td>TLS</td><td>Let's Encrypt, issued 2026-08-07 21:29:36 UTC</td></tr>
+    <tr><td>Data source</td><td><code>IDATASIGHT_SOURCE=csv</code> — deliberate, see §06.3</td></tr>
+    <tr class="total"><td>Total cost</td><td>≈ $0.30 · all resources verified destroyed</td></tr>
+  </tbody></table></div>
+</section>
+
+<!-- 02 -->
+<section id="arch">
+  <h2 class="sec"><span class="num">02</span> Architecture as deployed</h2>
+  <div class="code">
+    <div class="code-head">request path</div>
+<pre>Browser
+   │  https / wss
+   ▼
+Caddy :443  ── automatic Let's Encrypt cert, websocket-aware
+   │
+   ├─ /_event*, /_upload*, /ping, /_health, /_all_routes, /auth-codespace
+   │     └──► reverse_proxy 127.0.0.1:8000
+   │             reflex run --env prod --backend-only   (granian ASGI, systemd)
+   │
+   └─ everything else
+         └──► file_server  /var/www/idatasight
+                 static SPA from  reflex export --no-ssr
+                 try_files {path} {path}/index.html {path}.html /index.html</pre>
+  </div>
+  <div class="call win">
+    <span class="k">Key decision</span>
+    <p><strong>Caddy serves the frontend as static files; no Node process runs in production.</strong> <code>reflex export --frontend-only --no-ssr</code> emits a pure SPA, and the backend runs <code>--backend-only</code>. Instant restarts, ~200 MB less RAM, one less moving part. The cost is that a UI change requires an explicit rebuild step.</p>
+  </div>
+  <p style="color:var(--ink-2)"><strong>Ports:</strong> only 22 (from the deployer's IP), 80, and 443 were open. 3000 and 8000 were never exposed — Caddy reaches the backend over loopback.</p>
+</section>
+
+<!-- 03 -->
+<section id="prereq">
+  <h2 class="sec"><span class="num">03</span> Prerequisites &amp; credentials</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Item</th><th>Source</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>AWS IAM access key</td><td>IAM → Users → Security credentials</td><td>20 chars, starts <code>AKIA</code>. See §06.5.</td></tr>
+      <tr><td>AWS region</td><td>chosen</td><td><code>us-west-2</code></td></tr>
+      <tr><td>Domain + DNS access</td><td>GoDaddy</td><td><code>consciouselectron.com</code>, NS <code>ns69/ns70.domaincontrol.com</code></td></tr>
+      <tr><td>EC2 key pair</td><td>created by <code>deploy.sh</code></td><td><code>deploy/idatasight-key.pem</code>, chmod 400</td></tr>
+      <tr><td>Snowflake credentials</td><td><strong>not used</strong></td><td>CSV path chosen — see §06.3</td></tr>
+    </tbody>
+  </table></div>
+  <div class="call">
+    <span class="k">Handling</span>
+    <p>Credentials were configured by the user directly via <code>aws configure --profile idatasight</code>, so no secret ever entered the assistant transcript. The assistant only ran <code>aws sts get-caller-identity</code> to verify.</p>
+  </div>
+</section>
+
+<!-- 04 -->
+<section id="scripts">
+  <h2 class="sec"><span class="num">04</span> The scripts</h2>
+  <p class="sec-note">All in <code>deploy/</code>. Idempotent and resumable — each completed step records itself under <code>deploy/.state</code>, so a failure costs only the failed step.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Script</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><code>config.env</code></td><td>Single config file — domain, region, instance type, runtime env vars</td></tr>
+      <tr><td><code>user-data.sh</code></td><td>Runs as root on first boot. Installs swap, python3.12-venv, rsync, Caddy, uv — in parallel with boot, so the deploy never waits on apt</td></tr>
+      <tr><td><code>deploy.sh</code></td><td>Full provision → live site, 11 phases</td></tr>
+      <tr><td><code>redeploy.sh</code></td><td>Push code. Excludes <code>data/</code>. <code>--frontend</code> also rebuilds the bundle</td></tr>
+      <tr><td><code>enable-snowflake.sh</code></td><td>Phase 2 — RSA key-pair auth, flip source, verify it <em>actually</em> connected. Written, never run</td></tr>
+      <tr><td><code>teardown.sh</code></td><td>Rescue <code>data/</code>, destroy everything, stop billing</td></tr>
+    </tbody>
+  </table></div>
+  <h3><code>deploy.sh</code> phases</h3>
+  <ul>
+    <li><strong>0</strong> Preflight — validate config, verify AWS auth</li>
+    <li><strong>1–2</strong> SSH key pair · security group (22 from deployer IP, 80, 443)</li>
+    <li><strong>3–4</strong> EC2 instance — AMI resolved live from SSM Parameter Store · Elastic IP</li>
+    <li><strong>5</strong> <strong>DNS gate</strong> — print the exact A record, poll until it resolves</li>
+    <li><strong>6</strong> Wait for SSH, then for the user-data bootstrap marker</li>
+    <li><strong>7</strong> <code>rsync</code> code with exclusions</li>
+    <li><strong>8</strong> venv → install → export → publish to <code>/var/www</code> → <strong>verify baked origin</strong></li>
+    <li><strong>9–11</strong> Caddy · systemd · verify <code>/ping</code></li>
+  </ul>
+</section>
+
+<!-- 05 -->
+<section id="timeline">
+  <h2 class="sec"><span class="num">05</span> What actually happened</h2>
+  <ol class="timeline">
+    <li><div class="t-body"><strong>Inspected the repo</strong> rather than assuming. Reflex 0.9.8, Python 3.12, uv, bun 1.3.11, no git repo, <code>.web</code> at 217 MB, <code>data/</code> at 1 MB.</div></li>
+    <li><div class="t-body"><strong>Read <code>warehouse.py</code> and <code>hooks.py</code></strong> — found the Snowflake browser-OAuth problem, and that <code>dispatch()</code> already offloads blocking work via <code>asyncio.to_thread</code>, so no async fix was needed.</div></li>
+    <li><div class="t-body"><strong>Wrote a 3-path decision doc</strong> (EC2+Caddy / Cloudflare Tunnel / Reflex Cloud); recommended EC2 because local disk had to persist.</div></li>
+    <li><div class="t-body"><strong>Wrote the automation</strong> — five scripts, all syntax-checked.</div></li>
+    <li><div class="t-body"><strong>Tested the frontend export locally before deploying.</strong> This caught the <code>REFLEX_API_URL</code> bug that would otherwise have shipped a dead app.</div></li>
+    <li><div class="t-body"><strong>Corrected scripts and runbook</strong> for the three build-related findings.</div></li>
+    <li><div class="t-body"><strong>User configured credentials.</strong> First attempt failed — account ID pasted into the access-key field. Fixed on the second.</div></li>
+    <li><div class="t-body"><strong>Deploy run #1</strong> — key pair, SG, instance, EIP provisioned. Reached the DNS gate, printed the A record, timed out after 10 minutes.</div></li>
+    <li><div class="t-body"><strong>GoDaddy rejected the record</strong> with <em>"Invalid data provided for record data."</em> Diagnosed extensively; never resolved.</div></li>
+    <li><div class="t-body"><strong>Pivoted to sslip.io</strong> — wildcard DNS requiring zero configuration.</div></li>
+    <li><div class="t-body"><strong>Deploy run #2</strong> — failed at rsync; macOS ships rsync 2.6.9.</div></li>
+    <li><div class="t-body"><strong>Deploy run #3</strong> — completed. Live, with a genuine Let's Encrypt certificate.</div></li>
+    <li><div class="t-body"><strong>Verified independently</strong>, not trusting the script's own health check.</div></li>
+    <li><div class="t-body"><strong>Teardown</strong> — all resources destroyed, all billing stopped, audited.</div></li>
+  </ol>
+</section>
+
+<!-- 06 -->
+<section id="problems">
+  <h2 class="sec"><span class="num">06</span> Problems encountered</h2>
+
+  <h3>06.1 &nbsp;<code>REFLEX_API_URL</code>, not <code>API_URL</code> — the most dangerous one</h3>
+  <div class="call stop">
+    <span class="k">Would have silently shipped a non-functional demo</span>
+    <p>Reflex's own self-hosting documentation says <code>API_URL</code>. On <strong>Reflex 0.9.8 that is silently ignored</strong> — the env-var prefix on 0.9.x is <code>REFLEX_</code>.</p>
+    <p>The value is compiled at build time into <code>.web/build/client/assets/reflex-env-*.js</code> as the websocket origin. With the wrong variable it stays <code>ws://localhost:8000/_event</code>, and the deployed page renders perfectly while responding to nothing — no error in the UI, none in the logs.</p>
+  </div>
+  <div class="code">
+    <div class="code-head">proof · run against the project venv</div>
+<pre>API_URL=https://probe.test         → api_url = http://localhost:8000   <span class="c">(ignored)</span>
+REFLEX_API_URL=https://probe.test  → api_url = https://probe.test      <span class="c">(works)</span></pre>
+  </div>
+  <p style="color:var(--ink-2)"><strong>Fix:</strong> export both <code>REFLEX_API_URL</code> and <code>REFLEX_DEPLOY_URL</code> before building; <code>https://</code> is auto-upgraded to <code>wss://</code>. <strong>Guard added:</strong> <code>deploy.sh</code> and <code>redeploy.sh --frontend</code> grep the built bundle for <code>wss://$DOMAIN/_event</code> and abort on mismatch.</p>
+
+  <h3 style="margin-top:30px">06.2 &nbsp;Build output moved in Reflex 0.9</h3>
+  <p style="color:var(--ink-2)">Reflex 0.9 uses React Router + Vite. Output is <code>.web/build/client</code>, not the <code>.web/_static</code> older docs describe. It is also a <strong>true SPA</strong> — only <code>index.html</code> and <code>404.html</code>, no per-route HTML — so a deep link to <code>/analysis</code> would 404 without a <code>try_files</code> fallback.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Excluded from rsync</th><th>Reason</th></tr></thead>
+    <tbody>
+      <tr><td><code>.web</code></td><td>217 MB of macOS-built artifacts; breaks on Linux; rebuilt server-side</td></tr>
+      <tr><td><code>.venv</code></td><td>60 MB of macOS wheels</td></tr>
+      <tr><td><code>.states</code></td><td>pickled local session state, meaningless remotely</td></tr>
+      <tr><td><code>reflex.lock</code></td><td>bun lockfile resolved against macOS</td></tr>
+      <tr><td><code>data</code> <em>(redeploy only)</em></td><td>protects live demo state from being overwritten</td></tr>
+    </tbody>
+  </table></div>
+  <p style="color:var(--ink-2)"><code>data/</code> <strong>is</strong> included on first deploy — it carries the seed warehouse panels, concept definitions, and <code>ledger.json</code>. The app is useless without it.</p>
+
+  <h3 style="margin-top:30px">06.3 &nbsp;Snowflake cannot work headless — and fails silently</h3>
+  <div class="code">
+    <div class="code-head">warehouse.py:234 · then :250</div>
+<pre>conn = snowflake.connector.connect(connection_name=SF_CONNECTION)  <span class="c"># "MN74135"</span>
+
+<span class="c"># ...</span>
+except Exception as e:
+    print(f"[warehouse] snowflake read failed for {ds_id}: {e}; using CSV")</pre>
+  </div>
+  <p style="color:var(--ink-2)">The connection profile uses <strong>browser OAuth</strong>. A headless server has no browser, so connect throws — and the handler catches <em>every</em> exception and falls back to the CSV mirror. The UI is byte-identical either way. <strong>You cannot tell from the screen whether Snowflake is being used.</strong></p>
+  <div class="call win">
+    <span class="k">Decision — ship on CSV deliberately</span>
+    <p><code>data/warehouse/</code> holds the same panels; <code>warehouse.py</code> treats the sources as interchangeable by design. The demo is identical while an entire class of silent failure disappears. Snowflake was deferred to <code>enable-snowflake.sh</code> (RSA key-pair auth), written and syntax-checked but <strong>never run</strong>.</p>
+  </div>
+  <div class="code">
+    <div class="code-head">if enabling later · verify with the log, not the screen</div>
+<pre>journalctl -u idatasight --since '2 min ago' | grep -i 'snowflake read failed'
+<span class="c"># silence = success</span></pre>
+  </div>
+  <p style="color:var(--ink-2)">Also check Snowflake's network-policy IP allowlist — it blocks with the same invisible symptom.</p>
+
+  <h3 style="margin-top:30px">06.4 &nbsp;EverOS — resolved differently than assumed</h3>
+  <p style="color:var(--ink-2)">At deploy time <strong>nothing in the tree referenced EverOS.</strong> The role it was described as playing — a module needing local disk — was filled by <code>data/</code>, specifically <code>data/store/ledger.json</code>, which <code>ledger_store.py</code> appends to on every analysis run. That persistence requirement is what ruled out Reflex Cloud's ephemeral filesystem and drove the EC2 choice.</p>
+  <div class="call stop">
+    <span class="k">Known gap — fix before any EverOS deploy</span>
+    <p>The systemd unit set a placeholder <code>EVEROS_DATA_DIR=/home/ubuntu/idatasight/data/everos</code>. The project's actual convention is <code>EVEROS_ROOT</code>, with a storage root at <code>~/.everos</code>. <strong>The placeholder name is wrong, and the real default sits outside the app directory</strong> — therefore outside every backup path this deployment used. Set <code>EVEROS_ROOT</code> explicitly to a persistent path and confirm the process user owns it.</p>
+  </div>
+
+  <h3 style="margin-top:30px">06.5 &nbsp;AWS credential paste error</h3>
+  <p style="color:var(--ink-2)">First <code>sts get-caller-identity</code> returned <code>InvalidClientTokenId</code>. Diagnosis without printing secrets — inspect the <em>shape</em>:</p>
+  <div class="code">
+    <div class="code-head">shape check</div>
+<pre>access_key_id : len 12, prefix 7897     <span class="c">← wrong</span>
+secret_key    : len 40                  <span class="c">← correct</span></pre>
+  </div>
+  <p style="color:var(--ink-2)">An AWS access key ID is <strong>20 characters beginning <code>AKIA</code></strong> (or <code>ASIA</code> for temporary credentials, which also need a session token). A <strong>12-digit number is an account ID</strong> — and the account did turn out to be <code>789748176365</code>. <strong>Lesson:</strong> validate credential shape before blaming permissions. Length and prefix identify the error instantly and leak nothing.</p>
+
+  <h3 style="margin-top:30px">06.6 &nbsp;GoDaddy — <span style="color:var(--accent)">UNRESOLVED</span></h3>
+  <div class="call stop">
+    <span class="k">Blocked the intended domain · never solved</span>
+    <p>Submitted <code>A</code> / <code>idatasight</code> / <code>54.71.45.186</code> / TTL 1 Hour — confirmed correct by screenshot. GoDaddy returned <strong>"Invalid data provided for record data."</strong></p>
+  </div>
+  <p style="color:var(--ink-2)"><strong>Ruled out</strong> by direct queries against GoDaddy's authoritative nameserver (<code>ns69.domaincontrol.com</code>), bypassing all caching:</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Hypothesis</th><th>Check</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>Duplicate A record</td><td><code>dig A idatasight… @ns69</code></td><td>empty — name free</td></tr>
+      <tr><td>Conflicting CNAME</td><td><code>dig CNAME … @ns69</code></td><td>empty</td></tr>
+      <tr><td>Conflicting AAAA / TXT</td><td><code>dig AAAA/TXT … @ns69</code></td><td>empty</td></tr>
+      <tr><td>Doubled-domain typo</td><td><code>dig A …com.consciouselectron.com</code></td><td>empty</td></tr>
+      <tr><td>Name field syntax</td><td>screenshot</td><td><code>idatasight</code> — correct bare label</td></tr>
+      <tr><td>Value malformed</td><td>screenshot</td><td><code>54.71.45.186</code> — correct</td></tr>
+      <tr><td>Propagation delay</td><td>authoritative NS query</td><td>record never saved at all</td></tr>
+      <tr><td>TTL below minimum</td><td>—</td><td>"1 Hour" is above the 600 s floor</td></tr>
+    </tbody>
+  </table></div>
+  <p style="color:var(--ink-2)"><strong>Untested hypotheses, most plausible first:</strong></p>
+  <ul>
+    <li><strong>Domain Connect / third-party zone management.</strong> The apex resolves to <code>76.223.105.230</code> and <code>13.248.243.5</code> — AWS Global Accelerator IPs, typical of an <strong>Amplify custom domain</strong>. If configured via GoDaddy's Domain Connect integration, GoDaddy can reject manual record edits with exactly this generic error. <strong>Leading candidate.</strong></li>
+    <li><strong>Invisible characters</strong> from pasting into the Name or Value field.</li>
+    <li><strong>Stale CSRF / session state</strong> — the form had been open a long time.</li>
+    <li><strong>Browser extension</strong> interfering with the request.</li>
+  </ul>
+  <div class="call watch">
+    <span class="k">If revisiting</span>
+    <p>Check whether the zone is under Domain Connect management (GoDaddy DNS page → look for a third-party "connected" banner), or use GoDaddy's <strong>DNS API</strong>, which returns far more specific errors than the web form.</p>
+  </div>
+
+  <h3 style="margin-top:30px">06.7 &nbsp;macOS ships rsync 2.6.9</h3>
+  <div class="code">
+    <div class="code-head">deploy run #2</div>
+<pre>rsync: unrecognized option `--info=stats1'</pre>
+  </div>
+  <p style="color:var(--ink-2)">macOS ships <code>openrsync</code> / rsync 2.6.9-compatible, predating <code>--info=</code> (rsync 3.1, 2013). <strong>Lesson:</strong> deploy scripts running <em>from</em> macOS cannot assume GNU userland — the same applies to <code>sed -i</code>, <code>date</code>, and <code>timeout</code>, which is absent entirely and bit us once during local testing.</p>
+
+  <h3 style="margin-top:30px">06.8 &nbsp;sslip.io — the unblock</h3>
+  <p style="color:var(--ink-2)">With GoDaddy refusing, <code>sslip.io</code> provided wildcard DNS requiring <strong>zero configuration</strong>: <code>&lt;ip&gt;.sslip.io</code> resolves to <code>&lt;ip&gt;</code>. Because it is on the Public Suffix List, Let's Encrypt treats each IP-subdomain as its own registered domain, so a <strong>genuine certificate</strong> is issued — no browser warning, nothing to explain to judges. Live in ~6 minutes.</p>
+
+  <h3 style="margin-top:30px">06.9 &nbsp;DNS gate timeout too short</h3>
+  <p style="color:var(--ink-2)">The initial 10-minute poll was tuned for propagation delay, not for a human fighting a web form. Raised to 25 minutes, and taught to detect the doubled-domain typo immediately rather than burning the whole window.</p>
+
+  <h3 style="margin-top:30px">06.10 &nbsp;Teardown data rescue failed — cause not diagnosed</h3>
+  <p style="color:var(--ink-2)"><code>teardown.sh</code> attempts to pull <code>data/</code> down before destroying anything. It reported <code>could not reach instance, skipping</code> and left a <strong>0-byte</strong> <code>deploy/data-backup.tgz</code>. The rescue is correctly ordered <em>before</em> termination, so ordering was not the cause; SSH failed for a reason that could not be investigated afterwards, the instance being gone.</p>
+  <p style="color:var(--ink-2)"><strong>Impact: minimal.</strong> Local <code>data/</code> was never touched — deploys only ever pushed it upward and <code>redeploy.sh</code> excludes it. The only loss was demo-session state generated on the instance.</p>
+  <div class="code">
+    <div class="code-head">fix for next time</div>
+<pre>[ -s "$HERE/data-backup.tgz" ] || { echo "backup empty — aborting"; exit 1; }</pre>
+  </div>
+  <div class="call stop">
+    <span class="k">Lesson</span>
+    <p>A backup step that fails soft is not a backup. <strong>Verify the artifact is non-empty before the irreversible action.</strong></p>
+  </div>
+</section>
+
+<!-- 07 -->
+<section id="verify">
+  <h2 class="sec"><span class="num">07</span> Verification performed</h2>
+  <p class="sec-note">The deploy script's own health check was not trusted. These ran independently.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Check</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>Page + TLS validity</td><td>200 · verify result 0 (valid) · 0.10 s</td></tr>
+      <tr><td>Certificate issuer</td><td>Let's Encrypt, valid to 2026-11-05</td></tr>
+      <tr><td>Backend health <code>/ping</code></td><td><code>"pong"</code></td></tr>
+      <tr><td><strong>WebSocket upgrade on <code>/_event</code></strong></td><td><strong>101 Switching Protocols</strong></td></tr>
+      <tr><td>SPA deep links <code>/analysis /beliefs /ledger</code></td><td>200 · 200 · 200</td></tr>
+      <tr><td>Baked origin in bundle</td><td><code>wss://54.71.45.186.sslip.io/_event</code></td></tr>
+      <tr><td>Services</td><td><code>idatasight</code> active · <code>caddy</code> active</td></tr>
+      <tr><td>Memory headroom</td><td>612 MB / 3834 MB</td></tr>
+    </tbody>
+  </table></div>
+  <div class="call watch">
+    <span class="k">Two verification traps worth recording</span>
+    <p><strong><code>"Invalid transport"</code></strong> on a socket.io <em>polling</em> probe is <strong>expected, not a fault</strong> — Reflex is configured websocket-only, so it correctly rejects polling. The reply itself proves the backend is reachable through Caddy.</p>
+    <p><strong>HTTP/2 returns 400 for a websocket upgrade.</strong> <code>Connection: Upgrade</code> is invalid in HTTP/2, so the test must force <code>--http1.1</code> or it is meaningless. The first attempt looked like a failure and was purely a test artifact.</p>
+  </div>
+</section>
+
+<!-- 08 -->
+<section id="lessons">
+  <h2 class="sec"><span class="num">08</span> Lessons learned</h2>
+  <ol class="lessons">
+    <li><div><span class="l-head">Test the risky build step locally before provisioning anything.</span><p>Running <code>reflex export</code> on the laptop cost 3 minutes and caught the <code>REFLEX_API_URL</code> bug. Discovering it on the server mid-hackathon would have cost far more — and it presents as a <em>working-looking</em> app, the hardest failure to diagnose.</p></div></li>
+    <li><div><span class="l-head">Verify, don't trust — especially anything compiled at build time.</span><p>Every build-time-baked value deserves an assertion. Grepping the bundle is cheap insurance against the worst failure mode.</p></div></li>
+    <li><div><span class="l-head">Silent fallbacks are worse than crashes.</span><p>Two independent instances here: Snowflake falling back to CSV, and the wrong env var falling back to localhost. Both produce a healthy-looking system. Where a fallback exists, find the signal that distinguishes the paths and check <em>that</em>.</p></div></li>
+    <li><div><span class="l-head">Library docs go stale; the installed version is the truth.</span><p>The Reflex blog said <code>API_URL</code>; the installed 0.9.8 required <code>REFLEX_API_URL</code>. Two minutes of introspection beat the documentation.</p></div></li>
+    <li><div><span class="l-head">Diagnose credentials by shape, not by retrying.</span><p>Length and prefix identified the account-ID-in-key-field error immediately, without printing or transmitting a secret.</p></div></li>
+    <li><div><span class="l-head">Query authoritative nameservers when debugging DNS.</span><p><code>dig @ns69.domaincontrol.com</code> separated "not saved" from "not propagated" instantly — which redirected the entire GoDaddy investigation.</p></div></li>
+    <li><div><span class="l-head">Have an escape hatch that removes the blocking dependency entirely.</span><p>sslip.io eliminated DNS from the critical path. Under time pressure, an unblock that sidesteps the problem beats continuing to fight it — and the real domain was always one config line away.</p></div></li>
+    <li><div><span class="l-head">Make deploy scripts idempotent and resumable from the start.</span><p><code>deploy.sh</code> ran four times. Because completed steps were recorded in <code>deploy/.state</code>, three retries cost seconds instead of full re-provisions.</p></div></li>
+    <li><div><span class="l-head">A backup that fails soft is not a backup.</span><p>The teardown rescue silently produced a 0-byte file and proceeded to destroy the source. Assert the artifact before the irreversible step.</p></div></li>
+    <li><div><span class="l-head">Don't assume GNU userland on macOS.</span><p><code>rsync --info</code>, <code>timeout</code>, and <code>sed -i</code> all differ or are absent.</p></div></li>
+    <li><div><span class="l-head">Ask which failure actually matters.</span><p>Rather than making the demo "correct" by wiring up live Snowflake, the right call was CSV — identical output, one less silent failure mode, six minutes saved for rehearsal.</p></div></li>
+  </ol>
+</section>
+
+<!-- 09 -->
+<section id="cost">
+  <h2 class="sec"><span class="num">09</span> Costs</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Line item</th><th class="num">Rate</th><th class="num">Actual (~1 hr)</th><th class="num">If left a month</th></tr></thead>
+    <tbody>
+      <tr><td>t3.medium</td><td class="num">$0.0416/hr</td><td class="num">$0.04</td><td class="num">$30.37</td></tr>
+      <tr><td>20 GB gp3 EBS</td><td class="num">$0.08/GB-mo</td><td class="num">$0.002</td><td class="num">$1.60</td></tr>
+      <tr><td>Public IPv4</td><td class="num">$0.005/hr</td><td class="num">$0.005</td><td class="num">$3.65</td></tr>
+      <tr><td>Data transfer out</td><td class="num">first 100 GB free</td><td class="num">$0.00</td><td class="num">$0.00</td></tr>
+      <tr class="total"><td>Total</td><td class="num">—</td><td class="num">≈ $0.30</td><td class="num">$35.62</td></tr>
+    </tbody>
+  </table></div>
+  <div class="call watch">
+    <span class="k">The trap</span>
+    <p>Stopping an instance does <strong>not</strong> stop the bill. EBS volumes and Elastic IPs bill whether attached or not. Terminate <strong>and</strong> release.</p>
+  </div>
+</section>
+
+<!-- 10 -->
+<section id="teardown">
+  <h2 class="sec"><span class="num">10</span> Teardown &amp; audit</h2>
+  <div class="code">
+    <div class="code-head">post-teardown · every billable resource class in the region</div>
+<pre>aws ec2 describe-instances  --query 'Reservations[].Instances[?State.Name!=`terminated`]'
+aws ec2 describe-addresses                    <span class="c"># Elastic IPs</span>
+aws ec2 describe-volumes                      <span class="c"># orphaned EBS</span>
+aws ec2 describe-snapshots --owner-ids self</pre>
+  </div>
+  <p style="color:var(--ink-2)">All four returned empty. Key pair and security group deleted.</p>
+  <div class="call stop">
+    <span class="k">Do not stop at "the instance is terminated"</span>
+    <p>Orphaned EBS volumes and released-but-still-allocated Elastic IPs are the classic silent charges. Audit all four resource classes.</p>
+  </div>
+</section>
+
+<!-- 11 -->
+<section id="redeploy">
+  <h2 class="sec"><span class="num">11</span> Redeploying</h2>
+  <p class="sec-note">Everything in <code>deploy/</code> is intact and reusable. A fresh run creates a <strong>new instance and new Elastic IP</strong>, so any sslip.io URL will differ. Nothing needs cleaning up first.</p>
+  <div class="code">
+    <div class="code-head">from scratch</div>
+<pre><span class="c"># 1. credentials — your own terminal, keeps secrets out of any transcript</span>
+aws configure --profile idatasight
+
+<span class="c"># 2. set DOMAIN in deploy/config.env</span>
+<span class="c">#    sslip.io needs the IP, known only after provisioning — so either start</span>
+<span class="c">#    with the real domain, or deploy once, read the IP, then switch.</span>
+
+<span class="c"># 3.</span>
+./deploy/deploy.sh</pre>
+  </div>
+  <div class="code">
+    <div class="code-head">iteration loop</div>
+<pre>./deploy/redeploy.sh              <span class="c"># ~40 s — handler bodies, backend/*.py</span>
+./deploy/redeploy.sh --frontend   <span class="c"># ~4 min — components, pages, theme,</span>
+                                  <span class="c">#          or any added/renamed State var</span></pre>
+  </div>
+  <p style="color:var(--ink-2)">When unsure, use <code>--frontend</code>. A skipped rebuild serves a stale UI, which looks exactly like the fix silently failing.</p>
+</section>
+
+<!-- 12 -->
+<section id="open">
+  <h2 class="sec"><span class="num">12</span> Outstanding items</h2>
+  <div class="findings">
+    <div class="finding">
+      <span class="sev crit">CRITICAL</span>
+      <div><h3>Gitignore the SSH private key before the first push</h3>
+      <p><code>deploy/idatasight-key.pem</code> sits in the repo directory. Pushing it to <code>git@github.com:sudhi-c-electron/idatasight-betahotn.git</code> publishes a private key. Add <code>deploy/*.pem</code>, <code>deploy/.state/</code>, and <code>deploy/data-backup.tgz</code> to <code>.gitignore</code>.</p></div>
+    </div>
+    <div class="finding">
+      <span class="sev open">OPEN</span>
+      <div><h3>GoDaddy record still fails</h3>
+      <p>Check the zone for Domain Connect management, or use the GoDaddy DNS API, which returns specific errors rather than the web form's generic one. See §06.6.</p></div>
+    </div>
+    <div class="finding">
+      <span class="sev warn">HIGH</span>
+      <div><h3><code>EVEROS_ROOT</code> not wired</h3>
+      <p>The systemd unit used a wrong placeholder name, and the real default root <code>~/.everos</code> is outside the app directory and outside every backup path this deployment used. See §06.4.</p></div>
+    </div>
+    <div class="finding">
+      <span class="sev warn">MEDIUM</span>
+      <div><h3><code>teardown.sh</code> must abort on an empty backup</h3>
+      <p>One-line guard, §06.10. Currently it destroys the source after a silently failed rescue.</p></div>
+    </div>
+    <div class="finding">
+      <span class="sev info">MEDIUM</span>
+      <div><h3>Snowflake never enabled</h3>
+      <p><code>enable-snowflake.sh</code> is written and syntax-checked but has never been executed against a live account.</p></div>
+    </div>
+    <div class="finding">
+      <span class="sev info">LOW</span>
+      <div><h3>Delete the 0-byte artifact</h3>
+      <p><code>deploy/data-backup.tgz</code> is empty and misleading — it looks like a backup.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 -->
+<section id="security">
+  <h2 class="sec"><span class="num">13</span> Security notes</h2>
+  <ul>
+    <li>Secrets never entered the assistant transcript. Credentials were configured by the user via <code>aws configure</code>; the assistant only ran <code>sts get-caller-identity</code>.</li>
+    <li><code>deploy/idatasight-key.pem</code> was chmod 400 and is deleted by <code>teardown.sh</code>.</li>
+    <li>SSH was restricted to the deployer's IP; ports 3000 and 8000 were never exposed.</li>
+    <li>The IAM user <code>celectron_admin</code> holds broad permissions. For anything longer-lived, a scoped deploy role is preferable to admin credentials on a laptop.</li>
+  </ul>
+  <div class="code">
+    <div class="code-head">add before the first git push</div>
+<pre>deploy/*.pem
+deploy/.state/
+deploy/data-backup.tgz</pre>
+  </div>
+</section>
+
+<footer>
+  <p>iDataSight deployment record · 2026-08-07 · Reflex 0.9.8 · Python 3.12 · uv 0.8.16 · bun 1.3.11 · AWS us-west-2</p>
+  <p style="margin-top:8px">Companion document: <code>deployment/DEPLOYMENT.md</code>. Scripts: <code>deploy/</code>.</p>
+</footer>
+
+</div>
+</body>
+</html>
